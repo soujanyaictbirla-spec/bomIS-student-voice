@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BOMIS Student Voice</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 650px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.15);
+    }
+
+    h1 {
+      text-align: center;
+      color: #1a4d8f;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    textarea {
+      height: 180px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 8px;
+      font-size: 17px;
+      cursor: pointer;
+    }
+
+    #startBtn {
+      background: #198754;
+      color: white;
+    }
+
+    #stopBtn {
+      background: #dc3545;
+      color: white;
+    }
+
+    #saveBtn {
+      background: #1a4d8f;
+      color: white;
+    }
+
+    #status {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    #clock {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>BOMIS Student Voice</h1>
+
+  <label>Student Name</label>
+  <input type="text" id="studentName" placeholder="Enter student name">
+
+  <label>Grade</label>
+  <select id="grade">
+    <option value="">Select Grade</option>
+    <option>Grade 1</option>
+    <option>Grade 2</option>
+    <option>Grade 3</option>
+    <option>Grade 4</option>
+    <option>Grade 5</option>
+    <option>Grade 6</option>
+    <option>Grade 7</option>
+    <option>Grade 8</option>
+    <option>Grade 9</option>
+    <option>Grade 10</option>
+    <option>Grade 11</option>
+    <option>Grade 12</option>
+  </select>
+
+  <label>Section</label>
+  <select id="section">
+    <option value="">Select Section</option>
+    <option>A</option>
+    <option>B</option>
+    <option>C</option>
+    <option>D</option>
+    <option>E</option>
+  </select>
+
+  <div id="clock"></div>
+
+  <button id="startBtn" onclick="startSpeech()">🎤 START SPEAKING</button>
+
+  <button id="stopBtn" onclick="stopSpeech()">⏹ STOP</button>
+
+  <label>Converted Text</label>
+  <textarea id="speechText" placeholder="Your speech will appear here..."></textarea>
+
+  <button id="saveBtn" onclick="saveRecord()">💾 SAVE RECORD</button>
+
+  <div id="status"></div>
+
+</div>
+
+<script>
+
+  // PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL BETWEEN THE QUOTES
+  const APPS_SCRIPT_URL =
+    "PASTE_YOUR_APPS_SCRIPT_URL_HERE";
+
+
+  // CLOCK
+  function updateClock() {
+    const now = new Date();
+
+    document.getElementById("clock").innerText =
+      "Time: " + now.toLocaleTimeString();
+  }
+
+  setInterval(updateClock, 1000);
+  updateClock();
+
+
+  // SPEECH RECOGNITION
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  let recognition;
+  let finalText = "";
+
+  if (SpeechRecognition) {
+
+    recognition = new SpeechRecognition();
+
+    recognition.lang = "en-IN";
+
+    recognition.continuous = true;
+
+    recognition.interimResults = true;
+
+
+    recognition.onstart = function() {
+
+      document.getElementById("status").innerText =
+        "🎤 Listening... Please speak.";
+
+    };
+
+
+    recognition.onresult = function(event) {
+
+      let interimText = "";
+
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+
+        const transcript =
+          event.results[i][0].transcript;
+
+        if (event.results[i].isFinal) {
+
+          finalText += transcript + " ";
+
+        } else {
+
+          interimText += transcript;
+
+        }
+      }
+
+      document.getElementById("speechText").value =
+        finalText + interimText;
+    };
+
+
+    recognition.onerror = function(event) {
+
+      document.getElementById("status").innerText =
+        "Speech error: " + event.error;
+
+    };
+
+
+    recognition.onend = function() {
+
+      document.getElementById("status").innerText =
+        "Speech stopped.";
+
+    };
+
+  } else {
+
+    document.getElementById("status").innerText =
+      "Speech recognition is not supported. Please use Google Chrome.";
+
+  }
+
+
+  function startSpeech() {
+
+    if (!recognition) return;
+
+    finalText = document.getElementById("speechText").value;
+
+    try {
+
+      recognition.start();
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  }
+
+
+  function stopSpeech() {
+
+    if (recognition) {
+
+      recognition.stop();
+
+    }
+
+  }
+
+
+  // SAVE TO GOOGLE SHEET
+  function saveRecord() {
+
+    const name =
+      document.getElementById("studentName").value.trim();
+
+    const grade =
+      document.getElementById("grade").value;
+
+    const section =
+      document.getElementById("section").value;
+
+    const text =
+      document.getElementById("speechText").value.trim();
+
+
+    if (!name || !grade || !section || !text) {
+
+      alert("Please enter Student Name, Grade, Section and Speech Text.");
+
+      return;
+
+    }
+
+
+    if (APPS_SCRIPT_URL === "PASTE_YOUR_APPS_SCRIPT_URL_HERE") {
+
+      alert("Please add your Google Apps Script URL in the HTML code.");
+
+      return;
+
+    }
+
+
+    document.getElementById("status").innerText =
+      "Saving record...";
+
+
+    fetch(APPS_SCRIPT_URL, {
+
+      method: "POST",
+
+      body: JSON.stringify({
+
+        name: name,
+
+        grade: grade,
+
+        section: section,
+
+        text: text
+
+      })
+
+    })
+
+    .then(response => response.json())
+
+    .then(data => {
+
+      if (data.success) {
+
+        document.getElementById("status").innerText =
+          "✅ Record saved successfully!";
+
+        document.getElementById("studentName").value = "";
+
+        document.getElementById("grade").value = "";
+
+        document.getElementById("section").value = "";
+
+        document.getElementById("speechText").value = "";
+
+        finalText = "";
+
+      } else {
+
+        document.getElementById("status").innerText =
+          "❌ Save failed: " + data.message;
+
+      }
+
+    })
+
+    .catch(error => {
+
+      document.getElementById("status").innerText =
+        "❌ Error saving record.";
+
+      console.log(error);
+
+    });
+
+  }
+
+</script>
+
+</body>
+</html>
