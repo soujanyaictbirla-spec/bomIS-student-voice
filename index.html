@@ -123,6 +123,12 @@
     <option>E</option>
   </select>
 
+  <label>Language</label>
+  <select id="language">
+    <option value="en-IN">English</option>
+    <option value="te-IN">Telugu</option>
+  </select>
+
   <div id="clock"></div>
 
   <button id="startBtn" onclick="startSpeech()">🎤 START SPEAKING</button>
@@ -140,35 +146,39 @@
 
 <script>
 
-  // PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL BETWEEN THE QUOTES
+  // YOUR GOOGLE APPS SCRIPT URL
   const APPS_SCRIPT_URL =
     "https://script.google.com/macros/s/AKfycbydLI89-T813TieNgUCGBji3bAbjW-zZzLJrdBgsz-ZIsVzHgebtVtpKakxEiG1ZLU8/exec";
 
 
   // CLOCK
   function updateClock() {
+
     const now = new Date();
 
     document.getElementById("clock").innerText =
       "Time: " + now.toLocaleTimeString();
+
   }
 
   setInterval(updateClock, 1000);
+
   updateClock();
 
 
   // SPEECH RECOGNITION
   const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
 
   let recognition;
+
   let finalText = "";
+
 
   if (SpeechRecognition) {
 
     recognition = new SpeechRecognition();
-
-    recognition.lang = "en-IN";
 
     recognition.continuous = true;
 
@@ -187,7 +197,11 @@
 
       let interimText = "";
 
-      for (let i = event.resultIndex; i < event.results.length; i++) {
+      for (
+        let i = event.resultIndex;
+        i < event.results.length;
+        i++
+      ) {
 
         const transcript =
           event.results[i][0].transcript;
@@ -201,10 +215,12 @@
           interimText += transcript;
 
         }
+
       }
 
       document.getElementById("speechText").value =
         finalText + interimText;
+
     };
 
 
@@ -231,11 +247,23 @@
   }
 
 
+  // START SPEAKING
   function startSpeech() {
 
     if (!recognition) return;
 
-    finalText = document.getElementById("speechText").value;
+
+    // Get selected language
+    const selectedLanguage =
+      document.getElementById("language").value;
+
+
+    recognition.lang = selectedLanguage;
+
+
+    finalText =
+      document.getElementById("speechText").value;
+
 
     try {
 
@@ -250,6 +278,7 @@
   }
 
 
+  // STOP SPEAKING
   function stopSpeech() {
 
     if (recognition) {
@@ -261,7 +290,7 @@
   }
 
 
-  // SAVE TO GOOGLE SHEET
+  // SAVE RECORD
   function saveRecord() {
 
     const name =
@@ -273,22 +302,18 @@
     const section =
       document.getElementById("section").value;
 
+    const language =
+      document.getElementById("language").value;
+
     const text =
       document.getElementById("speechText").value.trim();
 
 
     if (!name || !grade || !section || !text) {
 
-      alert("Please enter Student Name, Grade, Section and Speech Text.");
-
-      return;
-
-    }
-
-
-    if (APPS_SCRIPT_URL === "PASTE_YOUR_APPS_SCRIPT_URL_HERE") {
-
-      alert("Please add your Google Apps Script URL in the HTML code.");
+      alert(
+        "Please enter Student Name, Grade, Section and Speech Text."
+      );
 
       return;
 
@@ -311,6 +336,8 @@
 
         section: section,
 
+        language: language,
+
         text: text
 
       })
@@ -325,6 +352,7 @@
 
         document.getElementById("status").innerText =
           "✅ Record saved successfully!";
+
 
         document.getElementById("studentName").value = "";
 
