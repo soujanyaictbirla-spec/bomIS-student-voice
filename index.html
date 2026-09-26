@@ -1,104 +1,205 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
   <title>BOMIS Student Voice</title>
 
+
   <style>
+
     body {
+
       font-family: Arial, sans-serif;
+
       background: #f4f7fb;
+
       margin: 0;
+
       padding: 20px;
+
     }
+
 
     .container {
+
       max-width: 650px;
+
       margin: auto;
+
       background: white;
+
       padding: 25px;
+
       border-radius: 15px;
-      box-shadow: 0 3px 15px rgba(0,0,0,0.15);
+
+      box-shadow:
+        0 3px 15px rgba(0,0,0,0.15);
+
     }
+
 
     h1 {
+
       text-align: center;
+
       color: #1a4d8f;
+
     }
+
 
     label {
+
       display: block;
+
       margin-top: 15px;
+
       font-weight: bold;
+
     }
 
-    input, select, textarea {
+
+    input,
+    select,
+    textarea {
+
       width: 100%;
+
       padding: 12px;
+
       margin-top: 5px;
+
       box-sizing: border-box;
+
       border: 1px solid #ccc;
+
       border-radius: 8px;
+
       font-size: 16px;
+
     }
+
 
     textarea {
+
       height: 180px;
+
       resize: vertical;
+
     }
+
 
     button {
+
       width: 100%;
+
       padding: 14px;
+
       margin-top: 15px;
+
       border: none;
+
       border-radius: 8px;
+
       font-size: 17px;
+
       cursor: pointer;
+
     }
+
 
     #startBtn {
+
       background: #198754;
+
       color: white;
+
     }
+
 
     #stopBtn {
+
       background: #dc3545;
+
       color: white;
+
     }
+
 
     #saveBtn {
+
       background: #1a4d8f;
+
       color: white;
+
     }
+
 
     #status {
+
       text-align: center;
+
       margin-top: 15px;
+
       font-weight: bold;
+
     }
 
+
     #clock {
+
       text-align: center;
+
       margin-top: 10px;
+
       font-size: 18px;
+
     }
+
+
+    #audioStatus {
+
+      text-align: center;
+
+      margin-top: 10px;
+
+      font-size: 15px;
+
+    }
+
   </style>
+
 </head>
+
 
 <body>
 
+
 <div class="container">
+
 
   <h1>BOMIS Student Voice</h1>
 
+
   <label>Student Name</label>
-  <input type="text" id="studentName" placeholder="Enter student name">
+
+  <input
+    type="text"
+    id="studentName"
+    placeholder="Enter student name">
+
 
   <label>Grade</label>
+
   <select id="grade">
+
     <option value="">Select Grade</option>
+
     <option>Grade 1</option>
     <option>Grade 2</option>
     <option>Grade 3</option>
@@ -111,280 +212,622 @@
     <option>Grade 10</option>
     <option>Grade 11</option>
     <option>Grade 12</option>
+
   </select>
 
+
   <label>Section</label>
+
   <select id="section">
+
     <option value="">Select Section</option>
+
     <option>A</option>
     <option>B</option>
     <option>C</option>
     <option>D</option>
     <option>E</option>
+
   </select>
 
+
   <label>Language</label>
+
   <select id="language">
-    <option value="en-IN">English</option>
-    <option value="te-IN">Telugu</option>
+
+    <option value="en-IN">
+      English
+    </option>
+
+    <option value="te-IN">
+      Telugu
+    </option>
+
   </select>
+
 
   <div id="clock"></div>
 
-  <button id="startBtn" onclick="startSpeech()">🎤 START SPEAKING</button>
 
-  <button id="stopBtn" onclick="stopSpeech()">⏹ STOP</button>
+  <button
+    id="startBtn"
+    onclick="startSpeech()">
+
+    🎤 START SPEAKING
+
+  </button>
+
+
+  <button
+    id="stopBtn"
+    onclick="stopSpeech()">
+
+    ⏹ STOP
+
+  </button>
+
+
+  <div id="audioStatus">
+
+    🔊 Audio not recorded yet
+
+  </div>
+
 
   <label>Converted Text</label>
-  <textarea id="speechText" placeholder="Your speech will appear here..."></textarea>
 
-  <button id="saveBtn" onclick="saveRecord()">💾 SAVE RECORD</button>
+  <textarea
+    id="speechText"
+    placeholder="Your speech will appear here...">
+  </textarea>
+
+
+  <button
+    id="saveBtn"
+    onclick="saveRecord()">
+
+    💾 SAVE RECORD
+
+  </button>
+
 
   <div id="status"></div>
 
+
 </div>
+
 
 <script>
 
-  // YOUR GOOGLE APPS SCRIPT URL
-  const APPS_SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbydLI89-T813TieNgUCGBji3bAbjW-zZzLJrdBgsz-ZIsVzHgebtVtpKakxEiG1ZLU8/exec";
+
+// =====================================
+// GOOGLE APPS SCRIPT URL
+// =====================================
+
+const APPS_SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbydLI89-T813TieNgUCGBji3bAbjW-zZzLJrdBgsz-ZIsVzHgebtVtpKakxEiG1ZLU8/exec";
 
 
-  // CLOCK
-  function updateClock() {
+// =====================================
+// CLOCK
+// =====================================
 
-    const now = new Date();
+function updateClock() {
 
-    document.getElementById("clock").innerText =
-      "Time: " + now.toLocaleTimeString();
+  const now = new Date();
 
-  }
+  document.getElementById("clock").innerText =
+    "Time: " + now.toLocaleTimeString();
 
-  setInterval(updateClock, 1000);
+}
 
-  updateClock();
+setInterval(updateClock, 1000);
 
-
-  // SPEECH RECOGNITION
-  const SpeechRecognition =
-    window.SpeechRecognition ||
-    window.webkitSpeechRecognition;
-
-  let recognition;
-
-  let finalText = "";
+updateClock();
 
 
-  if (SpeechRecognition) {
+// =====================================
+// SPEECH RECOGNITION
+// =====================================
 
-    recognition = new SpeechRecognition();
+const SpeechRecognition =
+  window.SpeechRecognition ||
+  window.webkitSpeechRecognition;
 
-    recognition.continuous = true;
+let recognition;
 
-    recognition.interimResults = true;
-
-
-    recognition.onstart = function() {
-
-      document.getElementById("status").innerText =
-        "🎤 Listening... Please speak.";
-
-    };
+let finalText = "";
 
 
-    recognition.onresult = function(event) {
+if (SpeechRecognition) {
 
-      let interimText = "";
+  recognition =
+    new SpeechRecognition();
 
-      for (
-        let i = event.resultIndex;
-        i < event.results.length;
-        i++
-      ) {
+  recognition.continuous = true;
 
-        const transcript =
-          event.results[i][0].transcript;
+  recognition.interimResults = true;
 
-        if (event.results[i].isFinal) {
 
-          finalText += transcript + " ";
+  recognition.onstart = function() {
 
-        } else {
+    document.getElementById("status").innerText =
+      "🎤 Listening... Please speak.";
 
-          interimText += transcript;
+  };
 
-        }
+
+  recognition.onresult = function(event) {
+
+    let interimText = "";
+
+
+    for (
+      let i = event.resultIndex;
+      i < event.results.length;
+      i++
+    ) {
+
+      const transcript =
+        event.results[i][0].transcript;
+
+
+      if (event.results[i].isFinal) {
+
+        finalText +=
+          transcript + " ";
+
+      } else {
+
+        interimText += transcript;
 
       }
 
-      document.getElementById("speechText").value =
-        finalText + interimText;
-
-    };
+    }
 
 
-    recognition.onerror = function(event) {
+    document.getElementById("speechText").value =
+      finalText + interimText;
 
-      document.getElementById("status").innerText =
-        "Speech error: " + event.error;
-
-    };
+  };
 
 
-    recognition.onend = function() {
-
-      document.getElementById("status").innerText =
-        "Speech stopped.";
-
-    };
-
-  } else {
+  recognition.onerror = function(event) {
 
     document.getElementById("status").innerText =
-      "Speech recognition is not supported. Please use Google Chrome.";
+      "Speech error: " + event.error;
 
-  }
-
-
-  // START SPEAKING
-  function startSpeech() {
-
-    if (!recognition) return;
+  };
 
 
-    // Get selected language
-    const selectedLanguage =
-      document.getElementById("language").value;
+  recognition.onend = function() {
+
+    document.getElementById("status").innerText =
+      "Speech stopped.";
+
+  };
+
+}
 
 
-    recognition.lang = selectedLanguage;
+// =====================================
+// AUDIO RECORDING VARIABLES
+// =====================================
+
+let mediaRecorder;
+
+let audioChunks = [];
+
+let audioBlob = null;
 
 
-    finalText =
-      document.getElementById("speechText").value;
+// =====================================
+// START SPEECH + AUDIO
+// =====================================
+
+async function startSpeech() {
 
 
-    try {
+  try {
 
-      recognition.start();
 
-    } catch (error) {
+    // Get microphone
+    const stream =
+      await navigator.mediaDevices.getUserMedia({
+        audio: true
+      });
 
-      console.log(error);
+
+    // ---------------------------------
+    // START AUDIO RECORDING
+    // ---------------------------------
+
+    audioChunks = [];
+
+    audioBlob = null;
+
+
+    let mimeType = "audio/webm";
+
+
+    if (
+      MediaRecorder.isTypeSupported(
+        "audio/webm;codecs=opus"
+      )
+    ) {
+
+      mimeType =
+        "audio/webm;codecs=opus";
 
     }
 
-  }
+
+    mediaRecorder =
+      new MediaRecorder(
+        stream,
+        {
+          mimeType: mimeType
+        }
+      );
 
 
-  // STOP SPEAKING
-  function stopSpeech() {
+    mediaRecorder.ondataavailable =
+      function(event) {
+
+        if (event.data.size > 0) {
+
+          audioChunks.push(event.data);
+
+        }
+
+      };
+
+
+    mediaRecorder.onstop =
+      function() {
+
+        audioBlob =
+          new Blob(
+            audioChunks,
+            {
+              type: mimeType
+            }
+          );
+
+
+        document.getElementById(
+          "audioStatus"
+        ).innerText =
+          "✅ Audio recorded successfully";
+
+
+        // Stop microphone
+        stream.getTracks().forEach(
+          track => track.stop()
+        );
+
+      };
+
+
+    mediaRecorder.start();
+
+
+    // ---------------------------------
+    // START SPEECH RECOGNITION
+    // ---------------------------------
+
+    const selectedLanguage =
+      document.getElementById(
+        "language"
+      ).value;
+
 
     if (recognition) {
+
+      recognition.lang =
+        selectedLanguage;
+
+
+      finalText =
+        document.getElementById(
+          "speechText"
+        ).value;
+
+
+      recognition.start();
+
+    }
+
+
+    document.getElementById(
+      "audioStatus"
+    ).innerText =
+      "🔴 Recording audio...";
+
+
+  }
+
+  catch (error) {
+
+    console.error(error);
+
+    document.getElementById(
+      "status"
+    ).innerText =
+      "❌ Microphone error: " +
+      error.message;
+
+  }
+
+}
+
+
+// =====================================
+// STOP SPEECH + AUDIO
+// =====================================
+
+function stopSpeech() {
+
+
+  if (recognition) {
+
+    try {
 
       recognition.stop();
 
     }
 
+    catch (error) {
+
+      console.log(error);
+
+    }
+
   }
 
 
-  // SAVE RECORD
-  function saveRecord() {
+  if (
+    mediaRecorder &&
+    mediaRecorder.state !== "inactive"
+  ) {
 
-    const name =
-      document.getElementById("studentName").value.trim();
+    mediaRecorder.stop();
 
-    const grade =
-      document.getElementById("grade").value;
+  }
 
-    const section =
-      document.getElementById("section").value;
-
-    const language =
-      document.getElementById("language").value;
-
-    const text =
-      document.getElementById("speechText").value.trim();
+}
 
 
-    if (!name || !grade || !section || !text) {
+// =====================================
+// CONVERT AUDIO TO BASE64
+// =====================================
 
-      alert(
-        "Please enter Student Name, Grade, Section and Speech Text."
+function blobToBase64(blob) {
+
+  return new Promise(
+    (resolve, reject) => {
+
+      const reader =
+        new FileReader();
+
+
+      reader.onloadend =
+        function() {
+
+          resolve(
+            reader.result
+          );
+
+        };
+
+
+      reader.onerror =
+        reject;
+
+
+      reader.readAsDataURL(blob);
+
+    }
+  );
+
+}
+
+
+// =====================================
+// SAVE RECORD
+// =====================================
+
+async function saveRecord() {
+
+
+  const name =
+    document.getElementById(
+      "studentName"
+    ).value.trim();
+
+
+  const grade =
+    document.getElementById(
+      "grade"
+    ).value;
+
+
+  const section =
+    document.getElementById(
+      "section"
+    ).value;
+
+
+  const language =
+    document.getElementById(
+      "language"
+    ).value;
+
+
+  const text =
+    document.getElementById(
+      "speechText"
+    ).value.trim();
+
+
+  // ---------------------------------
+  // VALIDATION
+  // ---------------------------------
+
+  if (
+    !name ||
+    !grade ||
+    !section ||
+    !text
+  ) {
+
+    alert(
+      "Please enter Student Name, Grade, Section and Speech Text."
+    );
+
+    return;
+
+  }
+
+
+  if (!audioBlob) {
+
+    alert(
+      "Please record your voice before saving."
+    );
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "status"
+  ).innerText =
+    "⏳ Uploading audio and saving record...";
+
+
+  try {
+
+
+    // Convert audio
+    const audioBase64 =
+      await blobToBase64(
+        audioBlob
       );
 
-      return;
+
+    // ---------------------------------
+    // SEND TO APPS SCRIPT
+    // ---------------------------------
+
+    const response =
+      await fetch(
+        APPS_SCRIPT_URL,
+        {
+
+          method: "POST",
+
+          body: JSON.stringify({
+
+            name: name,
+
+            grade: grade,
+
+            section: section,
+
+            language: language,
+
+            text: text,
+
+            audio: audioBase64
+
+          })
+
+        }
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (result.success) {
+
+
+      document.getElementById(
+        "status"
+      ).innerText =
+        "✅ Record and audio saved successfully!";
+
+
+      // Clear fields
+      document.getElementById(
+        "studentName"
+      ).value = "";
+
+
+      document.getElementById(
+        "grade"
+      ).value = "";
+
+
+      document.getElementById(
+        "section"
+      ).value = "";
+
+
+      document.getElementById(
+        "speechText"
+      ).value = "";
+
+
+      document.getElementById(
+        "audioStatus"
+      ).innerText =
+        "🔊 Audio saved to Google Drive";
+
+
+      finalText = "";
+
+      audioBlob = null;
+
+      audioChunks = [];
+
+
+    } else {
+
+
+      document.getElementById(
+        "status"
+      ).innerText =
+        "❌ Save failed: " +
+        result.message;
 
     }
 
 
-    document.getElementById("status").innerText =
-      "Saving record...";
+  }
+
+  catch (error) {
 
 
-    fetch(APPS_SCRIPT_URL, {
-
-      method: "POST",
-
-      body: JSON.stringify({
-
-        name: name,
-
-        grade: grade,
-
-        section: section,
-
-        language: language,
-
-        text: text
-
-      })
-
-    })
-
-    .then(response => response.json())
-
-    .then(data => {
-
-      if (data.success) {
-
-        document.getElementById("status").innerText =
-          "✅ Record saved successfully!";
+    console.error(error);
 
 
-        document.getElementById("studentName").value = "";
-
-        document.getElementById("grade").value = "";
-
-        document.getElementById("section").value = "";
-
-        document.getElementById("speechText").value = "";
-
-        finalText = "";
-
-      } else {
-
-        document.getElementById("status").innerText =
-          "❌ Save failed: " + data.message;
-
-      }
-
-    })
-
-    .catch(error => {
-
-      document.getElementById("status").innerText =
-        "❌ Error saving record.";
-
-      console.log(error);
-
-    });
+    document.getElementById(
+      "status"
+    ).innerText =
+      "❌ Error saving record: " +
+      error.message;
 
   }
 
+}
+
 </script>
 
+
 </body>
+
 </html>
