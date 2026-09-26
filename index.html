@@ -3,296 +3,229 @@
 
 <head>
 
-  <meta charset="UTF-8">
-
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
-  <title>BOMIS Student Voice</title>
-
-
-  <style>
-
-    body {
-
-      font-family: Arial, sans-serif;
-
-      background: #f4f7fb;
-
-      margin: 0;
-
-      padding: 20px;
-
-    }
-
-
-    .container {
-
-      max-width: 650px;
-
-      margin: auto;
-
-      background: white;
-
-      padding: 25px;
-
-      border-radius: 15px;
-
-      box-shadow:
-        0 3px 15px rgba(0,0,0,0.15);
-
-    }
-
-
-    h1 {
-
-      text-align: center;
-
-      color: #1a4d8f;
-
-    }
-
-
-    label {
-
-      display: block;
-
-      margin-top: 15px;
-
-      font-weight: bold;
-
-    }
-
-
-    input,
-    select,
-    textarea {
-
-      width: 100%;
-
-      padding: 12px;
-
-      margin-top: 5px;
-
-      box-sizing: border-box;
-
-      border: 1px solid #ccc;
-
-      border-radius: 8px;
-
-      font-size: 16px;
-
-    }
-
-
-    textarea {
-
-      height: 180px;
-
-      resize: vertical;
-
-    }
-
-
-    button {
-
-      width: 100%;
-
-      padding: 14px;
-
-      margin-top: 15px;
-
-      border: none;
-
-      border-radius: 8px;
-
-      font-size: 17px;
-
-      cursor: pointer;
-
-    }
-
-
-    #startBtn {
-
-      background: #198754;
-
-      color: white;
-
-    }
-
-
-    #stopBtn {
-
-      background: #dc3545;
-
-      color: white;
-
-    }
-
-
-    #saveBtn {
-
-      background: #1a4d8f;
-
-      color: white;
-
-    }
-
-
-    #status {
-
-      text-align: center;
-
-      margin-top: 15px;
-
-      font-weight: bold;
-
-    }
-
-
-    #clock {
-
-      text-align: center;
-
-      margin-top: 10px;
-
-      font-size: 18px;
-
-    }
-
-
-    #audioStatus {
-
-      text-align: center;
-
-      margin-top: 10px;
-
-      font-size: 15px;
-
-    }
-
-  </style>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>BOMIS Student Voice</title>
+
+<style>
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f7fb;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 650px;
+  margin: auto;
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.15);
+}
+
+h1 {
+  text-align: center;
+  color: #1a4d8f;
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+textarea {
+  height: 180px;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+#startBtn {
+  background: #198754;
+  color: white;
+}
+
+#stopBtn {
+  background: #dc3545;
+  color: white;
+}
+
+#saveBtn {
+  background: #1a4d8f;
+  color: white;
+}
+
+#saveBtn:disabled,
+#stopBtn:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+#status,
+#audioStatus {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+#clock {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+audio {
+  width: 100%;
+  margin-top: 15px;
+}
+
+</style>
 
 </head>
 
-
 <body>
-
 
 <div class="container">
 
+<h1>BOMIS Student Voice</h1>
 
-  <h1>BOMIS Student Voice</h1>
+<label>Student Name</label>
 
-
-  <label>Student Name</label>
-
-  <input
-    type="text"
-    id="studentName"
-    placeholder="Enter student name">
+<input
+  type="text"
+  id="studentName"
+  placeholder="Enter student name">
 
 
-  <label>Grade</label>
+<label>Grade</label>
 
-  <select id="grade">
+<select id="grade">
 
-    <option value="">Select Grade</option>
+<option value="">Select Grade</option>
 
-    <option>Grade 1</option>
-    <option>Grade 2</option>
-    <option>Grade 3</option>
-    <option>Grade 4</option>
-    <option>Grade 5</option>
-    <option>Grade 6</option>
-    <option>Grade 7</option>
-    <option>Grade 8</option>
-    <option>Grade 9</option>
-    <option>Grade 10</option>
-    <option>Grade 11</option>
-    <option>Grade 12</option>
+<option>Grade 1</option>
+<option>Grade 2</option>
+<option>Grade 3</option>
+<option>Grade 4</option>
+<option>Grade 5</option>
+<option>Grade 6</option>
+<option>Grade 7</option>
+<option>Grade 8</option>
+<option>Grade 9</option>
+<option>Grade 10</option>
+<option>Grade 11</option>
+<option>Grade 12</option>
 
-  </select>
-
-
-  <label>Section</label>
-
-  <select id="section">
-
-    <option value="">Select Section</option>
-
-    <option>A</option>
-    <option>B</option>
-    <option>C</option>
-    <option>D</option>
-    <option>E</option>
-
-  </select>
+</select>
 
 
-  <label>Language</label>
+<label>Section</label>
 
-  <select id="language">
+<select id="section">
 
-    <option value="en-IN">
-      English
-    </option>
+<option value="">Select Section</option>
 
-    <option value="te-IN">
-      Telugu
-    </option>
+<option>A</option>
+<option>B</option>
+<option>C</option>
+<option>D</option>
+<option>E</option>
 
-  </select>
-
-
-  <div id="clock"></div>
+</select>
 
 
-  <button
-    id="startBtn"
-    onclick="startSpeech()">
+<label>Language</label>
 
-    🎤 START SPEAKING
+<select id="language">
 
-  </button>
+<option value="en-IN">English</option>
 
+<option value="te-IN">Telugu</option>
 
-  <button
-    id="stopBtn"
-    onclick="stopSpeech()">
-
-    ⏹ STOP
-
-  </button>
+</select>
 
 
-  <div id="audioStatus">
-
-    🔊 Audio not recorded yet
-
-  </div>
+<div id="clock"></div>
 
 
-  <label>Converted Text</label>
+<button
+  id="startBtn"
+  onclick="startRecording()">
 
-  <textarea
-    id="speechText"
-    placeholder="Your speech will appear here...">
-  </textarea>
+🎤 START SPEAKING
 
-
-  <button
-    id="saveBtn"
-    onclick="saveRecord()">
-
-    💾 SAVE RECORD
-
-  </button>
+</button>
 
 
-  <div id="status"></div>
+<button
+  id="stopBtn"
+  onclick="stopRecording()"
+  disabled>
 
+⏹ STOP
+
+</button>
+
+
+<div id="audioStatus">
+
+🔊 Audio not recorded
+
+</div>
+
+
+<audio
+  id="audioPreview"
+  controls
+  style="display:none">
+
+</audio>
+
+
+<label>Converted Text</label>
+
+<textarea
+  id="speechText"
+  placeholder="Your speech will appear here...">
+</textarea>
+
+
+<button
+  id="saveBtn"
+  onclick="saveRecord()"
+  disabled>
+
+💾 SAVE RECORD
+
+</button>
+
+
+<div id="status"></div>
 
 </div>
 
@@ -300,24 +233,41 @@
 <script>
 
 
-// =====================================
-// GOOGLE APPS SCRIPT URL
-// =====================================
+// ==========================================
+// APPS SCRIPT URL
+// ==========================================
 
 const APPS_SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbydLI89-T813TieNgUCGBji3bAbjW-zZzLJrdBgsz-ZIsVzHgebtVtpKakxEiG1ZLU8/exec";
 
 
-// =====================================
+// ==========================================
+// VARIABLES
+// ==========================================
+
+let recognition = null;
+
+let mediaRecorder = null;
+
+let audioChunks = [];
+
+let audioBlob = null;
+
+let microphoneStream = null;
+
+let finalText = "";
+
+let recordingFinished = false;
+
+
+// ==========================================
 // CLOCK
-// =====================================
+// ==========================================
 
 function updateClock() {
 
-  const now = new Date();
-
   document.getElementById("clock").innerText =
-    "Time: " + now.toLocaleTimeString();
+    "Time: " + new Date().toLocaleTimeString();
 
 }
 
@@ -326,17 +276,13 @@ setInterval(updateClock, 1000);
 updateClock();
 
 
-// =====================================
+// ==========================================
 // SPEECH RECOGNITION
-// =====================================
+// ==========================================
 
 const SpeechRecognition =
   window.SpeechRecognition ||
   window.webkitSpeechRecognition;
-
-let recognition;
-
-let finalText = "";
 
 
 if (SpeechRecognition) {
@@ -349,106 +295,93 @@ if (SpeechRecognition) {
   recognition.interimResults = true;
 
 
-  recognition.onstart = function() {
+  recognition.onresult =
+    function(event) {
 
-    document.getElementById("status").innerText =
-      "🎤 Listening... Please speak.";
+      let interimText = "";
 
-  };
+      for (
+        let i = event.resultIndex;
+        i < event.results.length;
+        i++
+      ) {
 
+        const transcript =
+          event.results[i][0].transcript;
 
-  recognition.onresult = function(event) {
+        if (event.results[i].isFinal) {
 
-    let interimText = "";
+          finalText += transcript + " ";
 
+        } else {
 
-    for (
-      let i = event.resultIndex;
-      i < event.results.length;
-      i++
-    ) {
+          interimText += transcript;
 
-      const transcript =
-        event.results[i][0].transcript;
-
-
-      if (event.results[i].isFinal) {
-
-        finalText +=
-          transcript + " ";
-
-      } else {
-
-        interimText += transcript;
+        }
 
       }
 
-    }
+      document.getElementById(
+        "speechText"
+      ).value =
+        finalText + interimText;
+
+    };
 
 
-    document.getElementById("speechText").value =
-      finalText + interimText;
+  recognition.onerror =
+    function(event) {
 
-  };
+      console.log(
+        "Speech error:",
+        event.error
+      );
 
-
-  recognition.onerror = function(event) {
-
-    document.getElementById("status").innerText =
-      "Speech error: " + event.error;
-
-  };
-
-
-  recognition.onend = function() {
-
-    document.getElementById("status").innerText =
-      "Speech stopped.";
-
-  };
+    };
 
 }
 
 
-// =====================================
-// AUDIO RECORDING VARIABLES
-// =====================================
+// ==========================================
+// START RECORDING
+// ==========================================
 
-let mediaRecorder;
-
-let audioChunks = [];
-
-let audioBlob = null;
-
-
-// =====================================
-// START SPEECH + AUDIO
-// =====================================
-
-async function startSpeech() {
-
+async function startRecording() {
 
   try {
 
+    audioBlob = null;
+
+    audioChunks = [];
+
+    recordingFinished = false;
+
+    document.getElementById(
+      "saveBtn"
+    ).disabled = true;
+
+    document.getElementById(
+      "stopBtn"
+    ).disabled = false;
+
+    document.getElementById(
+      "startBtn"
+    ).disabled = true;
+
 
     // Get microphone
-    const stream =
+
+    microphoneStream =
       await navigator.mediaDevices.getUserMedia({
         audio: true
       });
 
 
-    // ---------------------------------
-    // START AUDIO RECORDING
-    // ---------------------------------
-
-    audioChunks = [];
-
-    audioBlob = null;
-
+    // ======================================
+    // AUDIO RECORDER
+    // ======================================
 
     let mimeType = "audio/webm";
-
 
     if (
       MediaRecorder.isTypeSupported(
@@ -464,7 +397,7 @@ async function startSpeech() {
 
     mediaRecorder =
       new MediaRecorder(
-        stream,
+        microphoneStream,
         {
           mimeType: mimeType
         }
@@ -495,16 +428,58 @@ async function startSpeech() {
           );
 
 
+        recordingFinished = true;
+
+
+        // Preview
+
+        const audioUrl =
+          URL.createObjectURL(
+            audioBlob
+          );
+
+        const preview =
+          document.getElementById(
+            "audioPreview"
+          );
+
+        preview.src = audioUrl;
+
+        preview.style.display = "block";
+
+
         document.getElementById(
           "audioStatus"
         ).innerText =
-          "✅ Audio recorded successfully";
+          "✅ Audio recording completed";
 
 
-        // Stop microphone
-        stream.getTracks().forEach(
-          track => track.stop()
-        );
+        document.getElementById(
+          "saveBtn"
+        ).disabled = false;
+
+
+        document.getElementById(
+          "startBtn"
+        ).disabled = false;
+
+
+        document.getElementById(
+          "stopBtn"
+        ).disabled = true;
+
+
+        // Release microphone
+
+        if (microphoneStream) {
+
+          microphoneStream
+            .getTracks()
+            .forEach(
+              track => track.stop()
+            );
+
+        }
 
       };
 
@@ -512,9 +487,9 @@ async function startSpeech() {
     mediaRecorder.start();
 
 
-    // ---------------------------------
-    // START SPEECH RECOGNITION
-    // ---------------------------------
+    // ======================================
+    // SPEECH RECOGNITION
+    // ======================================
 
     const selectedLanguage =
       document.getElementById(
@@ -522,17 +497,16 @@ async function startSpeech() {
       ).value;
 
 
+    finalText =
+      document.getElementById(
+        "speechText"
+      ).value;
+
+
     if (recognition) {
 
       recognition.lang =
         selectedLanguage;
-
-
-      finalText =
-        document.getElementById(
-          "speechText"
-        ).value;
-
 
       recognition.start();
 
@@ -543,6 +517,12 @@ async function startSpeech() {
       "audioStatus"
     ).innerText =
       "🔴 Recording audio...";
+
+
+    document.getElementById(
+      "status"
+    ).innerText =
+      "🎤 Listening...";
 
 
   }
@@ -557,16 +537,24 @@ async function startSpeech() {
       "❌ Microphone error: " +
       error.message;
 
+    document.getElementById(
+      "startBtn"
+    ).disabled = false;
+
+    document.getElementById(
+      "stopBtn"
+    ).disabled = true;
+
   }
 
 }
 
 
-// =====================================
-// STOP SPEECH + AUDIO
-// =====================================
+// ==========================================
+// STOP RECORDING
+// ==========================================
 
-function stopSpeech() {
+function stopRecording() {
 
 
   if (recognition) {
@@ -577,9 +565,9 @@ function stopSpeech() {
 
     }
 
-    catch (error) {
+    catch (e) {
 
-      console.log(error);
+      console.log(e);
 
     }
 
@@ -591,6 +579,11 @@ function stopSpeech() {
     mediaRecorder.state !== "inactive"
   ) {
 
+    document.getElementById(
+      "audioStatus"
+    ).innerText =
+      "⏳ Finishing audio recording...";
+
     mediaRecorder.stop();
 
   }
@@ -598,32 +591,33 @@ function stopSpeech() {
 }
 
 
-// =====================================
-// CONVERT AUDIO TO BASE64
-// =====================================
+// ==========================================
+// CONVERT BLOB TO BASE64
+// ==========================================
 
 function blobToBase64(blob) {
 
   return new Promise(
-    (resolve, reject) => {
+    function(resolve, reject) {
 
       const reader =
         new FileReader();
 
-
-      reader.onloadend =
+      reader.onload =
         function() {
 
-          resolve(
-            reader.result
-          );
+          const result =
+            reader.result;
+
+          const base64 =
+            result.split(",")[1];
+
+          resolve(base64);
 
         };
 
-
       reader.onerror =
         reject;
-
 
       reader.readAsDataURL(blob);
 
@@ -633,11 +627,21 @@ function blobToBase64(blob) {
 }
 
 
-// =====================================
+// ==========================================
 // SAVE RECORD
-// =====================================
+// ==========================================
 
 async function saveRecord() {
+
+  if (!recordingFinished || !audioBlob) {
+
+    alert(
+      "Please stop the recording and wait until 'Audio recording completed' appears."
+    );
+
+    return;
+
+  }
 
 
   const name =
@@ -658,10 +662,16 @@ async function saveRecord() {
     ).value;
 
 
-  const language =
+  const languageSelect =
     document.getElementById(
       "language"
-    ).value;
+    );
+
+
+  const language =
+    languageSelect.options[
+      languageSelect.selectedIndex
+    ].text;
 
 
   const text =
@@ -670,16 +680,7 @@ async function saveRecord() {
     ).value.trim();
 
 
-  // ---------------------------------
-  // VALIDATION
-  // ---------------------------------
-
-  if (
-    !name ||
-    !grade ||
-    !section ||
-    !text
-  ) {
+  if (!name || !grade || !section || !text) {
 
     alert(
       "Please enter Student Name, Grade, Section and Speech Text."
@@ -690,60 +691,57 @@ async function saveRecord() {
   }
 
 
-  if (!audioBlob) {
-
-    alert(
-      "Please record your voice before saving."
-    );
-
-    return;
-
-  }
+  document.getElementById(
+    "saveBtn"
+  ).disabled = true;
 
 
   document.getElementById(
     "status"
   ).innerText =
-    "⏳ Uploading audio and saving record...";
+    "⏳ Preparing audio...";
 
 
   try {
 
-
-    // Convert audio
-    const audioBase64 =
+    const base64 =
       await blobToBase64(
         audioBlob
       );
 
 
-    // ---------------------------------
-    // SEND TO APPS SCRIPT
-    // ---------------------------------
+    document.getElementById(
+      "status"
+    ).innerText =
+      "⏳ Uploading audio to Google Drive...";
+
+
+    const payload = {
+
+      name: name,
+
+      grade: grade,
+
+      section: section,
+
+      language: language,
+
+      text: text,
+
+      audioBase64: base64,
+
+      audioMimeType:
+        audioBlob.type || "audio/webm"
+
+    };
+
 
     const response =
       await fetch(
         APPS_SCRIPT_URL,
         {
-
           method: "POST",
-
-          body: JSON.stringify({
-
-            name: name,
-
-            grade: grade,
-
-            section: section,
-
-            language: language,
-
-            text: text,
-
-            audio: audioBase64
-
-          })
-
+          body: JSON.stringify(payload)
         }
       );
 
@@ -752,81 +750,97 @@ async function saveRecord() {
       await response.json();
 
 
-    if (result.success) {
+    console.log(
+      "Apps Script response:",
+      result
+    );
 
+
+    if (result.success) {
 
       document.getElementById(
         "status"
+      ).innerHTML =
+        "✅ SUCCESS! Audio saved to Google Drive.";
+
+      document.getElementById(
+        "audioStatus"
       ).innerText =
-        "✅ Record and audio saved successfully!";
+        "✅ Audio uploaded successfully";
 
 
-      // Clear fields
+      // Show the Drive link
+
+      if (result.audioUrl) {
+
+        document.getElementById(
+          "status"
+        ).innerHTML +=
+          '<br><br><a href="' +
+          result.audioUrl +
+          '" target="_blank">🔊 OPEN AUDIO FILE</a>';
+
+      }
+
+
+      // Clear form
+
       document.getElementById(
         "studentName"
       ).value = "";
-
 
       document.getElementById(
         "grade"
       ).value = "";
 
-
       document.getElementById(
         "section"
       ).value = "";
-
 
       document.getElementById(
         "speechText"
       ).value = "";
 
-
-      document.getElementById(
-        "audioStatus"
-      ).innerText =
-        "🔊 Audio saved to Google Drive";
-
-
-      finalText = "";
-
       audioBlob = null;
 
       audioChunks = [];
 
+      recordingFinished = false;
+
+      document.getElementById(
+        "audioPreview"
+      ).style.display = "none";
+
 
     } else {
 
-
-      document.getElementById(
-        "status"
-      ).innerText =
-        "❌ Save failed: " +
-        result.message;
+      throw new Error(
+        result.message
+      );
 
     }
-
 
   }
 
   catch (error) {
 
-
     console.error(error);
-
 
     document.getElementById(
       "status"
     ).innerText =
-      "❌ Error saving record: " +
+      "❌ Upload failed: " +
       error.message;
+
+    document.getElementById(
+      "saveBtn"
+    ).disabled = false;
 
   }
 
 }
 
 </script>
-
 
 </body>
 
