@@ -42,6 +42,7 @@ label {
 input,
 select,
 textarea {
+
   width: 100%;
   padding: 12px;
   margin-top: 5px;
@@ -49,13 +50,17 @@ textarea {
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 16px;
+
 }
 
 textarea {
+
   height: 180px;
+
 }
 
 button {
+
   width: 100%;
   padding: 14px;
   margin-top: 15px;
@@ -63,56 +68,100 @@ button {
   border-radius: 8px;
   font-size: 17px;
   cursor: pointer;
+
 }
 
 #startBtn {
+
   background: #198754;
   color: white;
+
 }
 
 #stopBtn {
+
   background: #dc3545;
   color: white;
+
 }
 
 #saveBtn {
+
   background: #1a4d8f;
   color: white;
+
 }
 
-#saveBtn:disabled,
-#stopBtn:disabled {
-  background: #aaa;
+button:disabled {
+
+  background: #aaa !important;
   cursor: not-allowed;
+
 }
 
 #status,
 #audioStatus {
+
   text-align: center;
   margin-top: 15px;
   font-weight: bold;
+
 }
 
 #clock {
+
   text-align: center;
   margin-top: 10px;
   font-size: 18px;
+
 }
 
 audio {
+
   width: 100%;
   margin-top: 15px;
+
+}
+
+.success {
+
+  color: green;
+
+}
+
+.error {
+
+  color: red;
+
+}
+
+.audio-link {
+
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 15px;
+  background: #198754;
+  color: white;
+  text-decoration: none;
+  border-radius: 7px;
+
 }
 
 </style>
 
 </head>
 
+
 <body>
+
 
 <div class="container">
 
-<h1>BOMIS Student Voice</h1>
+
+<h1>🎤 BOMIS Student Voice</h1>
+
+
+<!-- STUDENT NAME -->
 
 <label>Student Name</label>
 
@@ -121,6 +170,8 @@ audio {
   id="studentName"
   placeholder="Enter student name">
 
+
+<!-- GRADE -->
 
 <label>Grade</label>
 
@@ -144,6 +195,8 @@ audio {
 </select>
 
 
+<!-- SECTION -->
+
 <label>Section</label>
 
 <select id="section">
@@ -159,6 +212,8 @@ audio {
 </select>
 
 
+<!-- LANGUAGE -->
+
 <label>Language</label>
 
 <select id="language">
@@ -170,8 +225,12 @@ audio {
 </select>
 
 
+<!-- CLOCK -->
+
 <div id="clock"></div>
 
+
+<!-- START -->
 
 <button
   id="startBtn"
@@ -181,6 +240,8 @@ audio {
 
 </button>
 
+
+<!-- STOP -->
 
 <button
   id="stopBtn"
@@ -192,12 +253,16 @@ audio {
 </button>
 
 
+<!-- AUDIO STATUS -->
+
 <div id="audioStatus">
 
 🔊 Audio not recorded
 
 </div>
 
+
+<!-- AUDIO PREVIEW -->
 
 <audio
   id="audioPreview"
@@ -207,6 +272,8 @@ audio {
 </audio>
 
 
+<!-- TEXT -->
+
 <label>Converted Text</label>
 
 <textarea
@@ -214,6 +281,8 @@ audio {
   placeholder="Your speech will appear here...">
 </textarea>
 
+
+<!-- SAVE -->
 
 <button
   id="saveBtn"
@@ -225,7 +294,10 @@ audio {
 </button>
 
 
+<!-- STATUS -->
+
 <div id="status"></div>
+
 
 </div>
 
@@ -233,17 +305,17 @@ audio {
 <script>
 
 
-// ==========================================
+// =====================================================
 // APPS SCRIPT URL
-// ==========================================
+// =====================================================
 
 const APPS_SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbydLI89-T813TieNgUCGBji3bAbjW-zZzLJrdBgsz-ZIsVzHgebtVtpKakxEiG1ZLU8/exec";
 
 
-// ==========================================
+// =====================================================
 // VARIABLES
-// ==========================================
+// =====================================================
 
 let recognition = null;
 
@@ -259,26 +331,12 @@ let finalText = "";
 
 let recordingFinished = false;
 
-
-// ==========================================
-// CLOCK
-// ==========================================
-
-function updateClock() {
-
-  document.getElementById("clock").innerText =
-    "Time: " + new Date().toLocaleTimeString();
-
-}
-
-setInterval(updateClock, 1000);
-
-updateClock();
+let selectedMimeType = "audio/webm";
 
 
-// ==========================================
+// =====================================================
 // SPEECH RECOGNITION
-// ==========================================
+// =====================================================
 
 const SpeechRecognition =
   window.SpeechRecognition ||
@@ -300,6 +358,7 @@ if (SpeechRecognition) {
 
       let interimText = "";
 
+
       for (
         let i = event.resultIndex;
         i < event.results.length;
@@ -309,9 +368,13 @@ if (SpeechRecognition) {
         const transcript =
           event.results[i][0].transcript;
 
-        if (event.results[i].isFinal) {
 
-          finalText += transcript + " ";
+        if (
+          event.results[i].isFinal
+        ) {
+
+          finalText +=
+            transcript + " ";
 
         } else {
 
@@ -320,6 +383,7 @@ if (SpeechRecognition) {
         }
 
       }
+
 
       document.getElementById(
         "speechText"
@@ -333,8 +397,18 @@ if (SpeechRecognition) {
     function(event) {
 
       console.log(
-        "Speech error:",
+        "Speech recognition error:",
         event.error
+      );
+
+    };
+
+
+  recognition.onend =
+    function() {
+
+      console.log(
+        "Speech recognition ended"
       );
 
     };
@@ -342,13 +416,39 @@ if (SpeechRecognition) {
 }
 
 
-// ==========================================
+// =====================================================
+// CLOCK
+// =====================================================
+
+function updateClock() {
+
+  document.getElementById(
+    "clock"
+  ).innerText =
+    "Time: " +
+    new Date().toLocaleTimeString();
+
+}
+
+
+setInterval(
+  updateClock,
+  1000
+);
+
+updateClock();
+
+
+// =====================================================
 // START RECORDING
-// ==========================================
+// =====================================================
 
 async function startRecording() {
 
   try {
+
+
+    // RESET AUDIO
 
     audioBlob = null;
 
@@ -356,20 +456,25 @@ async function startRecording() {
 
     recordingFinished = false;
 
+
     document.getElementById(
       "saveBtn"
     ).disabled = true;
 
-    document.getElementById(
-      "stopBtn"
-    ).disabled = false;
 
     document.getElementById(
       "startBtn"
     ).disabled = true;
 
 
-    // Get microphone
+    document.getElementById(
+      "stopBtn"
+    ).disabled = false;
+
+
+    // -----------------------------------------------
+    // GET MICROPHONE
+    // -----------------------------------------------
 
     microphoneStream =
       await navigator.mediaDevices.getUserMedia({
@@ -377,11 +482,13 @@ async function startRecording() {
       });
 
 
-    // ======================================
-    // AUDIO RECORDER
-    // ======================================
+    // -----------------------------------------------
+    // SELECT AUDIO FORMAT
+    // -----------------------------------------------
 
-    let mimeType = "audio/webm";
+    selectedMimeType =
+      "audio/webm";
+
 
     if (
       MediaRecorder.isTypeSupported(
@@ -389,64 +496,152 @@ async function startRecording() {
       )
     ) {
 
-      mimeType =
+      selectedMimeType =
         "audio/webm;codecs=opus";
 
     }
+    else if (
+      MediaRecorder.isTypeSupported(
+        "audio/webm"
+      )
+    ) {
 
+      selectedMimeType =
+        "audio/webm";
+
+    }
+    else if (
+      MediaRecorder.isTypeSupported(
+        "audio/mp4"
+      )
+    ) {
+
+      selectedMimeType =
+        "audio/mp4";
+
+    }
+
+
+    console.log(
+      "Audio format:",
+      selectedMimeType
+    );
+
+
+    // -----------------------------------------------
+    // CREATE MEDIA RECORDER
+    // -----------------------------------------------
 
     mediaRecorder =
       new MediaRecorder(
         microphoneStream,
         {
-          mimeType: mimeType
+          mimeType:
+            selectedMimeType
         }
       );
 
 
+    // -----------------------------------------------
+    // AUDIO DATA
+    // -----------------------------------------------
+
     mediaRecorder.ondataavailable =
       function(event) {
 
-        if (event.data.size > 0) {
+        if (
+          event.data &&
+          event.data.size > 0
+        ) {
 
-          audioChunks.push(event.data);
+          audioChunks.push(
+            event.data
+          );
 
         }
 
       };
 
 
+    // -----------------------------------------------
+    // RECORDING STOPPED
+    // -----------------------------------------------
+
     mediaRecorder.onstop =
       function() {
+
+
+        console.log(
+          "MediaRecorder stopped"
+        );
+
+
+        // CREATE AUDIO BLOB
 
         audioBlob =
           new Blob(
             audioChunks,
             {
-              type: mimeType
+              type:
+                selectedMimeType
             }
           );
+
+
+        console.log(
+          "Audio size:",
+          audioBlob.size
+        );
+
+
+        if (
+          audioBlob.size === 0
+        ) {
+
+          document.getElementById(
+            "audioStatus"
+          ).innerText =
+            "❌ Audio recording is empty.";
+
+          document.getElementById(
+            "saveBtn"
+          ).disabled = true;
+
+          return;
+
+        }
 
 
         recordingFinished = true;
 
 
-        // Preview
+        // -------------------------------------------
+        // AUDIO PREVIEW
+        // -------------------------------------------
 
         const audioUrl =
           URL.createObjectURL(
             audioBlob
           );
 
+
         const preview =
           document.getElementById(
             "audioPreview"
           );
 
-        preview.src = audioUrl;
 
-        preview.style.display = "block";
+        preview.src =
+          audioUrl;
 
+
+        preview.style.display =
+          "block";
+
+
+        // -------------------------------------------
+        // STATUS
+        // -------------------------------------------
 
         document.getElementById(
           "audioStatus"
@@ -469,14 +664,20 @@ async function startRecording() {
         ).disabled = true;
 
 
-        // Release microphone
+        // -------------------------------------------
+        // RELEASE MICROPHONE
+        // -------------------------------------------
 
-        if (microphoneStream) {
+        if (
+          microphoneStream
+        ) {
 
           microphoneStream
             .getTracks()
             .forEach(
-              track => track.stop()
+              function(track) {
+                track.stop();
+              }
             );
 
         }
@@ -484,22 +685,28 @@ async function startRecording() {
       };
 
 
-    mediaRecorder.start();
+    // -----------------------------------------------
+    // START AUDIO
+    // -----------------------------------------------
+
+    mediaRecorder.start(
+      1000
+    );
 
 
-    // ======================================
-    // SPEECH RECOGNITION
-    // ======================================
-
-    const selectedLanguage =
-      document.getElementById(
-        "language"
-      ).value;
-
+    // -----------------------------------------------
+    // SPEECH TEXT
+    // -----------------------------------------------
 
     finalText =
       document.getElementById(
         "speechText"
+      ).value;
+
+
+    const selectedLanguage =
+      document.getElementById(
+        "language"
       ).value;
 
 
@@ -508,10 +715,27 @@ async function startRecording() {
       recognition.lang =
         selectedLanguage;
 
-      recognition.start();
+
+      try {
+
+        recognition.start();
+
+      }
+      catch (error) {
+
+        console.log(
+          "Recognition start:",
+          error
+        );
+
+      }
 
     }
 
+
+    // -----------------------------------------------
+    // STATUS
+    // -----------------------------------------------
 
     document.getElementById(
       "audioStatus"
@@ -522,14 +746,19 @@ async function startRecording() {
     document.getElementById(
       "status"
     ).innerText =
-      "🎤 Listening...";
-
+      "🎤 Listening... Speak now.";
 
   }
 
+
   catch (error) {
 
-    console.error(error);
+
+    console.error(
+      "Microphone error:",
+      error
+    );
+
 
     document.getElementById(
       "status"
@@ -537,9 +766,11 @@ async function startRecording() {
       "❌ Microphone error: " +
       error.message;
 
+
     document.getElementById(
       "startBtn"
     ).disabled = false;
+
 
     document.getElementById(
       "stopBtn"
@@ -550,12 +781,14 @@ async function startRecording() {
 }
 
 
-// ==========================================
+// =====================================================
 // STOP RECORDING
-// ==========================================
+// =====================================================
 
 function stopRecording() {
 
+
+  // STOP SPEECH
 
   if (recognition) {
 
@@ -564,25 +797,28 @@ function stopRecording() {
       recognition.stop();
 
     }
+    catch (error) {
 
-    catch (e) {
-
-      console.log(e);
+      console.log(error);
 
     }
 
   }
 
 
+  // STOP AUDIO
+
   if (
     mediaRecorder &&
-    mediaRecorder.state !== "inactive"
+    mediaRecorder.state !==
+      "inactive"
   ) {
 
     document.getElementById(
       "audioStatus"
     ).innerText =
       "⏳ Finishing audio recording...";
+
 
     mediaRecorder.stop();
 
@@ -591,33 +827,69 @@ function stopRecording() {
 }
 
 
-// ==========================================
+// =====================================================
 // CONVERT BLOB TO BASE64
-// ==========================================
+// =====================================================
 
 function blobToBase64(blob) {
 
   return new Promise(
     function(resolve, reject) {
 
+
       const reader =
         new FileReader();
+
 
       reader.onload =
         function() {
 
-          const result =
-            reader.result;
+          try {
 
-          const base64 =
-            result.split(",")[1];
+            const result =
+              reader.result;
 
-          resolve(base64);
+
+            const base64 =
+              result.split(",")[1];
+
+
+            if (!base64) {
+
+              reject(
+                new Error(
+                  "Could not convert audio to Base64."
+                )
+              );
+
+              return;
+
+            }
+
+
+            resolve(base64);
+
+          }
+          catch (error) {
+
+            reject(error);
+
+          }
 
         };
 
+
       reader.onerror =
-        reject;
+        function() {
+
+          reject(
+            new Error(
+              "Could not read audio file."
+            )
+          );
+
+        };
+
 
       reader.readAsDataURL(blob);
 
@@ -627,22 +899,34 @@ function blobToBase64(blob) {
 }
 
 
-// ==========================================
+// =====================================================
 // SAVE RECORD
-// ==========================================
+// =====================================================
 
 async function saveRecord() {
 
-  if (!recordingFinished || !audioBlob) {
+
+  // -----------------------------------------------
+  // CHECK AUDIO
+  // -----------------------------------------------
+
+  if (
+    !recordingFinished ||
+    !audioBlob
+  ) {
 
     alert(
-      "Please stop the recording and wait until 'Audio recording completed' appears."
+      "Please stop the recording first."
     );
 
     return;
 
   }
 
+
+  // -----------------------------------------------
+  // GET FORM DATA
+  // -----------------------------------------------
 
   const name =
     document.getElementById(
@@ -680,7 +964,16 @@ async function saveRecord() {
     ).value.trim();
 
 
-  if (!name || !grade || !section || !text) {
+  // -----------------------------------------------
+  // VALIDATION
+  // -----------------------------------------------
+
+  if (
+    !name ||
+    !grade ||
+    !section ||
+    !text
+  ) {
 
     alert(
       "Please enter Student Name, Grade, Section and Speech Text."
@@ -690,6 +983,10 @@ async function saveRecord() {
 
   }
 
+
+  // -----------------------------------------------
+  // DISABLE SAVE
+  // -----------------------------------------------
 
   document.getElementById(
     "saveBtn"
@@ -704,10 +1001,56 @@ async function saveRecord() {
 
   try {
 
+
+    // ---------------------------------------------
+    // CONVERT AUDIO
+    // ---------------------------------------------
+
     const base64 =
       await blobToBase64(
         audioBlob
       );
+
+
+    console.log(
+      "Base64 length:",
+      base64.length
+    );
+
+
+    // ---------------------------------------------
+    // CREATE PAYLOAD
+    // ---------------------------------------------
+
+    const payload = {
+
+      name:
+        name,
+
+      grade:
+        grade,
+
+      section:
+        section,
+
+      language:
+        language,
+
+      text:
+        text,
+
+      audioBase64:
+        base64,
+
+      audioMimeType:
+        selectedMimeType
+
+    };
+
+
+    console.log(
+      "Sending payload..."
+    );
 
 
     document.getElementById(
@@ -716,90 +1059,149 @@ async function saveRecord() {
       "⏳ Uploading audio to Google Drive...";
 
 
-    const payload = {
-
-      name: name,
-
-      grade: grade,
-
-      section: section,
-
-      language: language,
-
-      text: text,
-
-      audioBase64: base64,
-
-      audioMimeType:
-        audioBlob.type || "audio/webm"
-
-    };
-
+    // ---------------------------------------------
+    // SEND TO APPS SCRIPT
+    // ---------------------------------------------
 
     const response =
       await fetch(
         APPS_SCRIPT_URL,
         {
-          method: "POST",
-          body: JSON.stringify(payload)
+          method:
+            "POST",
+
+          body:
+            JSON.stringify(
+              payload
+            )
         }
       );
 
 
-    const result =
-      await response.json();
+    console.log(
+      "Response status:",
+      response.status
+    );
+
+
+    // ---------------------------------------------
+    // READ RESPONSE
+    // ---------------------------------------------
+
+    const responseText =
+      await response.text();
 
 
     console.log(
       "Apps Script response:",
-      result
+      responseText
     );
 
 
-    if (result.success) {
+    let result;
+
+
+    try {
+
+      result =
+        JSON.parse(
+          responseText
+        );
+
+    }
+    catch (error) {
+
+      throw new Error(
+        "Apps Script returned an invalid response."
+      );
+
+    }
+
+
+    // ---------------------------------------------
+    // SUCCESS
+    // ---------------------------------------------
+
+    if (
+      result.success
+    ) {
+
 
       document.getElementById(
         "status"
       ).innerHTML =
-        "✅ SUCCESS! Audio saved to Google Drive.";
+        '<div class="success">' +
+        '✅ RECORD SAVED SUCCESSFULLY!' +
+        '<br><br>' +
+        '📁 File: ' +
+        result.fileName +
+        '</div>';
 
-      document.getElementById(
-        "audioStatus"
-      ).innerText =
-        "✅ Audio uploaded successfully";
 
+      // -------------------------------------------
+      // DRIVE LINK
+      // -------------------------------------------
 
-      // Show the Drive link
-
-      if (result.audioUrl) {
+      if (
+        result.audioUrl
+      ) {
 
         document.getElementById(
           "status"
         ).innerHTML +=
-          '<br><br><a href="' +
+
+          '<br>' +
+
+          '<a class="audio-link" ' +
+
+          'href="' +
           result.audioUrl +
-          '" target="_blank">🔊 OPEN AUDIO FILE</a>';
+          '" ' +
+
+          'target="_blank">' +
+
+          '🔊 OPEN AUDIO FILE' +
+
+          '</a>';
 
       }
 
 
-      // Clear form
+      // -------------------------------------------
+      // RESET FORM
+      // -------------------------------------------
 
       document.getElementById(
         "studentName"
       ).value = "";
 
+
       document.getElementById(
         "grade"
       ).value = "";
+
 
       document.getElementById(
         "section"
       ).value = "";
 
+
       document.getElementById(
         "speechText"
       ).value = "";
+
+
+      document.getElementById(
+        "audioPreview"
+      ).style.display =
+        "none";
+
+
+      document.getElementById(
+        "audioStatus"
+      ).innerText =
+        "🔊 Audio saved to Drive";
+
 
       audioBlob = null;
 
@@ -807,30 +1209,41 @@ async function saveRecord() {
 
       recordingFinished = false;
 
-      document.getElementById(
-        "audioPreview"
-      ).style.display = "none";
+
+    }
 
 
-    } else {
+    else {
+
 
       throw new Error(
-        result.message
+        result.message ||
+        "Upload failed."
       );
 
     }
 
+
   }
+
 
   catch (error) {
 
-    console.error(error);
+
+    console.error(
+      "Upload error:",
+      error
+    );
+
 
     document.getElementById(
       "status"
-    ).innerText =
-      "❌ Upload failed: " +
-      error.message;
+    ).innerHTML =
+      '<div class="error">' +
+      '❌ UPLOAD FAILED<br>' +
+      error.message +
+      '</div>';
+
 
     document.getElementById(
       "saveBtn"
@@ -841,6 +1254,7 @@ async function saveRecord() {
 }
 
 </script>
+
 
 </body>
 
