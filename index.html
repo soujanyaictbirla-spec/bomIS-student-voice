@@ -1,32 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
-  <base target="_top">
+  <meta charset="UTF-8">
 
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0">
 
   <title>BOMIS Student Voice Recorder</title>
 
-
   <style>
 
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
       margin: 0;
       padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #f3f6fa;
     }
 
     .container {
-      max-width: 650px;
+      max-width: 700px;
       margin: auto;
       background: white;
       padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 3px 15px rgba(0,0,0,0.15);
+      border-radius: 18px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.12);
     }
 
     h1 {
@@ -42,16 +45,15 @@
 
     label {
       display: block;
+      font-weight: bold;
       margin-top: 15px;
       margin-bottom: 6px;
-      font-weight: bold;
     }
 
     input,
     select,
     textarea {
       width: 100%;
-      box-sizing: border-box;
       padding: 12px;
       border: 1px solid #ccc;
       border-radius: 8px;
@@ -59,66 +61,91 @@
     }
 
     textarea {
-      min-height: 150px;
+      min-height: 160px;
       resize: vertical;
+    }
+
+    .language-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .language-buttons button {
+      flex: 1;
+      padding: 13px;
+      border: 2px solid #ccc;
+      background: white;
+      color: #333;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .language-buttons button.selected {
+      background: #1565c0;
+      color: white;
+      border-color: #1565c0;
+    }
+
+    .timer {
+      text-align: center;
+      font-size: 30px;
+      font-weight: bold;
+      margin: 20px 0;
     }
 
     .buttons {
       display: flex;
       gap: 10px;
-      margin-top: 18px;
+      margin-top: 15px;
     }
 
-    button {
+    button.action {
       flex: 1;
       padding: 14px;
       border: none;
       border-radius: 8px;
+      color: white;
       font-size: 16px;
       cursor: pointer;
     }
 
-    #startButton {
+    .start {
       background: #2e7d32;
-      color: white;
     }
 
-    #stopButton {
+    .stop {
       background: #c62828;
-      color: white;
     }
 
-    #saveButton {
-      background: #1565c0;
-      color: white;
-    }
-
-    #clearButton {
-      background: #777;
-      color: white;
-    }
-
-    #downloadButton {
+    .download {
       background: #6a1b9a;
-      color: white;
+    }
+
+    .save {
+      background: #1565c0;
+    }
+
+    .clear {
+      background: #777;
     }
 
     button:disabled {
-      background: #ccc !important;
+      background: #bbb !important;
       cursor: not-allowed;
     }
 
-    #status {
-      margin-top: 18px;
-      padding: 12px;
-      background: #f1f1f1;
-      border-radius: 8px;
-      text-align: center;
+    audio {
+      width: 100%;
+      margin-top: 15px;
     }
 
-    .recording {
-      color: #c62828;
-      font-weight: bold;
+    #status {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #f1f1f1;
+      text-align: center;
     }
 
     .success {
@@ -131,23 +158,18 @@
       font-weight: bold;
     }
 
-    audio {
-      width: 100%;
-      margin-top: 15px;
-    }
-
-    .recording-box {
-      margin-top: 20px;
-      padding: 15px;
-      background: #f7f7f7;
-      border-radius: 10px;
-    }
-
-    .timer {
-      text-align: center;
-      font-size: 24px;
+    .recording {
+      color: #c62828;
       font-weight: bold;
-      margin-top: 10px;
+    }
+
+    .info {
+      margin-top: 15px;
+      padding: 12px;
+      background: #eef5ff;
+      border-radius: 8px;
+      font-size: 14px;
+      line-height: 1.6;
     }
 
   </style>
@@ -161,30 +183,37 @@
 <div class="container">
 
 
-  <h1>BOMIS Student Voice Recorder</h1>
+  <h1>🎤 BOMIS Student Voice Recorder</h1>
 
   <div class="subtitle">
-    Audio Recording + Speech to Text
+    Audio Recording + English/Telugu Speech-to-Text
   </div>
 
 
-  <!-- Student Name -->
+  <!-- STUDENT NAME -->
 
-  <label>Student Name</label>
+  <label for="studentName">
+    Student Name
+  </label>
 
   <input
-    type="text"
     id="studentName"
-    placeholder="Enter student name">
+    type="text"
+    placeholder="Enter student name"
+  >
 
 
-  <!-- Grade -->
+  <!-- GRADE -->
 
-  <label>Grade</label>
+  <label for="grade">
+    Grade
+  </label>
 
   <select id="grade">
 
-    <option value="">Select Grade</option>
+    <option value="">
+      Select Grade
+    </option>
 
     <option value="Grade 1">Grade 1</option>
     <option value="Grade 2">Grade 2</option>
@@ -202,94 +231,140 @@
   </select>
 
 
-  <!-- Date -->
+  <!-- DATE -->
 
-  <label>Date</label>
+  <label for="date">
+    Date
+  </label>
 
   <input
+    id="date"
     type="date"
-    id="date">
+  >
 
 
-  <!-- Recording -->
+  <!-- LANGUAGE -->
 
-  <div class="recording-box">
+  <label>
+    Language
+  </label>
 
-    <div class="timer" id="timer">
-      00:00
-    </div>
-
-
-    <div class="buttons">
-
-      <button
-        id="startButton"
-        onclick="startRecording()">
-
-        🎤 Start Recording
-
-      </button>
-
-
-      <button
-        id="stopButton"
-        onclick="stopRecording()"
-        disabled>
-
-        ⏹ Stop
-
-      </button>
-
-    </div>
-
-
-    <audio
-      id="audioPlayer"
-      controls
-      style="display:none;">
-    </audio>
-
-
-    <div class="buttons">
-
-      <button
-        id="downloadButton"
-        onclick="downloadAudio()"
-        disabled>
-
-        ⬇️ Download Audio
-
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- Speech Text -->
-
-  <label>Conversation Text</label>
-
-  <textarea
-    id="transcript"
-    placeholder="Your speech will appear here..."></textarea>
-
-
-  <!-- Save / Clear -->
-
-  <div class="buttons">
+  <div class="language-buttons">
 
     <button
-      id="saveButton"
-      onclick="saveText()">
+      type="button"
+      id="englishButton"
+      onclick="selectLanguage('English')">
 
-      💾 Save Text to GSheet
+      🇬🇧 English
 
     </button>
 
 
     <button
-      id="clearButton"
+      type="button"
+      id="teluguButton"
+      onclick="selectLanguage('Telugu')">
+
+      తెలుగు Telugu
+
+    </button>
+
+  </div>
+
+
+  <!-- TIMER -->
+
+  <div
+    class="timer"
+    id="timer">
+
+    00:00
+
+  </div>
+
+
+  <!-- RECORD BUTTONS -->
+
+  <div class="buttons">
+
+    <button
+      class="action start"
+      id="startButton"
+      onclick="startRecording()">
+
+      🎤 Start Recording
+
+    </button>
+
+
+    <button
+      class="action stop"
+      id="stopButton"
+      onclick="stopRecording()"
+      disabled>
+
+      ⏹ Stop
+
+    </button>
+
+  </div>
+
+
+  <!-- AUDIO PLAYER -->
+
+  <audio
+    id="audioPlayer"
+    controls
+    style="display:none;">
+  </audio>
+
+
+  <!-- DOWNLOAD BUTTON -->
+
+  <div class="buttons">
+
+    <button
+      class="action download"
+      id="downloadButton"
+      onclick="downloadAudio()"
+      disabled>
+
+      ⬇️ Download Audio
+
+    </button>
+
+  </div>
+
+
+  <!-- TRANSCRIPT -->
+
+  <label for="transcript">
+    Conversation Text
+  </label>
+
+  <textarea
+    id="transcript"
+    placeholder="Your speech will automatically appear here..."
+  ></textarea>
+
+
+  <!-- SAVE / CLEAR -->
+
+  <div class="buttons">
+
+    <button
+      class="action save"
+      id="saveButton"
+      onclick="saveToGoogleSheet()">
+
+      💾 Save to Google Sheet
+
+    </button>
+
+
+    <button
+      class="action clear"
       onclick="clearAll()">
 
       Clear
@@ -299,8 +374,41 @@
   </div>
 
 
+  <!-- STATUS -->
+
   <div id="status">
+
     Ready
+
+  </div>
+
+
+  <!-- INFORMATION -->
+
+  <div class="info">
+
+    <b>How to use:</b>
+
+    <br><br>
+
+    1. Enter Student Name.<br>
+
+    2. Select Grade.<br>
+
+    3. Select English or Telugu.<br>
+
+    4. Click <b>Start Recording</b>.<br>
+
+    5. Speak into the laptop microphone or headset.<br>
+
+    6. Speech will appear as text.<br>
+
+    7. Click <b>Stop</b>.<br>
+
+    8. Click <b>Download Audio</b> to save the recording.<br>
+
+    9. Text is automatically sent to Google Sheet.
+
   </div>
 
 
@@ -309,6 +417,15 @@
 
 
 <script>
+
+
+// =====================================================
+// YOUR GOOGLE APPS SCRIPT WEB APP URL
+// =====================================================
+
+const GOOGLE_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbyE1juAJGnPJKSfdh41W4K7gpi8k-QUsO_hgmSKI7P7s1ljb48LzEQJT8G4Uw6HRqUL/exec";
+
 
 
 // =====================================================
@@ -325,13 +442,17 @@ let audioUrl = null;
 
 let recognition = null;
 
-let isListening = false;
+let isRecording = false;
+
+let selectedLanguage = "";
 
 let finalTranscript = "";
 
 let timerInterval = null;
 
 let seconds = 0;
+
+let saveStarted = false;
 
 
 
@@ -357,15 +478,23 @@ function setTodayDate() {
 
   const today = new Date();
 
-  const yyyy = today.getFullYear();
+  const yyyy =
+    today.getFullYear();
 
-  const mm = String(today.getMonth() + 1)
-    .padStart(2, "0");
+  const mm =
+    String(
+      today.getMonth() + 1
+    ).padStart(2, "0");
 
-  const dd = String(today.getDate())
-    .padStart(2, "0");
+  const dd =
+    String(
+      today.getDate()
+    ).padStart(2, "0");
 
-  document.getElementById("date").value =
+
+  document.getElementById(
+    "date"
+  ).value =
     yyyy + "-" + mm + "-" + dd;
 
 }
@@ -373,7 +502,62 @@ function setTodayDate() {
 
 
 // =====================================================
-// SPEECH RECOGNITION
+// LANGUAGE SELECTION
+// =====================================================
+
+function selectLanguage(language) {
+
+  selectedLanguage = language;
+
+
+  document.getElementById(
+    "englishButton"
+  ).classList.remove("selected");
+
+
+  document.getElementById(
+    "teluguButton"
+  ).classList.remove("selected");
+
+
+  if (language === "English") {
+
+    document.getElementById(
+      "englishButton"
+    ).classList.add("selected");
+
+  }
+
+
+  if (language === "Telugu") {
+
+    document.getElementById(
+      "teluguButton"
+    ).classList.add("selected");
+
+  }
+
+
+  if (recognition) {
+
+    recognition.lang =
+      language === "Telugu"
+        ? "te-IN"
+        : "en-IN";
+
+  }
+
+
+  setStatus(
+    language + " selected."
+  );
+
+}
+
+
+
+// =====================================================
+// SETUP SPEECH RECOGNITION
 // =====================================================
 
 function setupSpeechRecognition() {
@@ -386,7 +570,7 @@ function setupSpeechRecognition() {
   if (!SpeechRecognition) {
 
     setStatus(
-      "Speech-to-text is not supported in this browser.",
+      "Speech recognition requires Google Chrome.",
       "error"
     );
 
@@ -395,81 +579,94 @@ function setupSpeechRecognition() {
   }
 
 
-  recognition = new SpeechRecognition();
+  recognition =
+    new SpeechRecognition();
+
 
   recognition.continuous = true;
 
   recognition.interimResults = true;
 
-  recognition.lang = "en-IN";
+  recognition.maxAlternatives = 1;
 
 
-  recognition.onstart = function() {
+  recognition.onresult =
+    function(event) {
 
-    isListening = true;
-
-  };
-
-
-  recognition.onresult = function(event) {
-
-    let interimTranscript = "";
+      let interimText = "";
 
 
-    for (
-      let i = event.resultIndex;
-      i < event.results.length;
-      i++
-    ) {
+      for (
+        let i = event.resultIndex;
+        i < event.results.length;
+        i++
+      ) {
 
-      const speech =
-        event.results[i][0].transcript;
+        const speech =
+          event.results[i][0]
+            .transcript;
 
 
-      if (event.results[i].isFinal) {
+        if (
+          event.results[i].isFinal
+        ) {
 
-        finalTranscript += speech + " ";
+          finalTranscript +=
+            speech + " ";
 
-      } else {
+        } else {
 
-        interimTranscript += speech;
+          interimText +=
+            speech;
+
+        }
 
       }
 
-    }
+
+      document.getElementById(
+        "transcript"
+      ).value =
+        finalTranscript +
+        interimText;
+
+    };
 
 
-    document.getElementById("transcript").value =
-      finalTranscript + interimTranscript;
+  recognition.onerror =
+    function(event) {
 
-  };
-
-
-  recognition.onerror = function(event) {
-
-    console.log(
-      "Speech recognition error:",
-      event.error
-    );
-
-
-    if (event.error === "not-allowed") {
-
-      setStatus(
-        "Microphone permission denied. Please allow microphone access.",
-        "error"
+      console.log(
+        "Speech recognition error:",
+        event.error
       );
 
-    }
 
-  };
+      if (
+        event.error ===
+        "not-allowed"
+      ) {
+
+        setStatus(
+          "Microphone permission denied. Please allow microphone access in Chrome.",
+          "error"
+        );
+
+      }
 
 
-  recognition.onend = function() {
+      if (
+        event.error ===
+        "no-speech"
+      ) {
 
-    isListening = false;
+        console.log(
+          "No speech detected."
+        );
 
-  };
+      }
+
+    };
 
 }
 
@@ -483,19 +680,21 @@ async function startRecording() {
 
 
   const studentName =
-    document.getElementById("studentName")
-      .value.trim();
+    document.getElementById(
+      "studentName"
+    ).value.trim();
 
 
   const grade =
-    document.getElementById("grade")
-      .value;
+    document.getElementById(
+      "grade"
+    ).value;
 
 
   if (!studentName) {
 
     setStatus(
-      "Please enter the student name.",
+      "Please enter Student Name.",
       "error"
     );
 
@@ -507,7 +706,34 @@ async function startRecording() {
   if (!grade) {
 
     setStatus(
-      "Please select the grade.",
+      "Please select Grade.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if (!selectedLanguage) {
+
+    setStatus(
+      "Please select English or Telugu.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if (
+    !navigator.mediaDevices ||
+    !navigator.mediaDevices.getUserMedia
+  ) {
+
+    setStatus(
+      "Microphone is not available. Please use the HTTPS GitHub Pages URL.",
       "error"
     );
 
@@ -518,128 +744,249 @@ async function startRecording() {
 
   try {
 
-    const stream =
-      await navigator.mediaDevices.getUserMedia({
-        audio: true
-      });
 
+    // Request microphone
+
+    const stream =
+      await navigator.mediaDevices
+        .getUserMedia({
+          audio: true
+        });
+
+
+    // Reset audio
 
     audioChunks = [];
 
+    audioBlob = null;
 
-    mediaRecorder =
-      new MediaRecorder(stream);
 
+    if (audioUrl) {
+
+      URL.revokeObjectURL(
+        audioUrl
+      );
+
+      audioUrl = null;
+
+    }
+
+
+    document.getElementById(
+      "downloadButton"
+    ).disabled = true;
+
+
+    // Create recorder
+
+    let mimeType = "";
+
+
+    if (
+      MediaRecorder.isTypeSupported(
+        "audio/webm;codecs=opus"
+      )
+    ) {
+
+      mimeType =
+        "audio/webm;codecs=opus";
+
+    }
+
+    else if (
+      MediaRecorder.isTypeSupported(
+        "audio/webm"
+      )
+    ) {
+
+      mimeType =
+        "audio/webm";
+
+    }
+
+
+    if (mimeType) {
+
+      mediaRecorder =
+        new MediaRecorder(
+          stream,
+          {
+            mimeType:
+              mimeType
+          }
+        );
+
+    } else {
+
+      mediaRecorder =
+        new MediaRecorder(
+          stream
+        );
+
+    }
+
+
+    // Audio data
 
     mediaRecorder.ondataavailable =
       function(event) {
 
-        if (event.data.size > 0) {
+        if (
+          event.data &&
+          event.data.size > 0
+        ) {
 
-          audioChunks.push(event.data);
+          audioChunks.push(
+            event.data
+          );
 
         }
 
       };
 
 
+    // Recording stopped
+
     mediaRecorder.onstop =
       function() {
+
 
         audioBlob =
           new Blob(
             audioChunks,
-            { type: "audio/webm" }
+            {
+              type:
+                mediaRecorder.mimeType ||
+                "audio/webm"
+            }
           );
 
 
         audioUrl =
-          URL.createObjectURL(audioBlob);
+          URL.createObjectURL(
+            audioBlob
+          );
 
 
         const player =
-          document.getElementById("audioPlayer");
+          document.getElementById(
+            "audioPlayer"
+          );
 
 
-        player.src = audioUrl;
+        player.src =
+          audioUrl;
 
-        player.style.display = "block";
+
+        player.style.display =
+          "block";
 
 
         document.getElementById(
           "downloadButton"
-        ).disabled = false;
+        ).disabled =
+          false;
+
+
+        stream
+          .getTracks()
+          .forEach(
+            function(track) {
+
+              track.stop();
+
+            }
+          );
 
 
         setStatus(
-          "Recording completed. You can play or download it.",
+          "Recording completed. Audio is ready to download.",
           "success"
-        );
-
-
-        // Stop microphone
-        stream.getTracks().forEach(
-          track => track.stop()
         );
 
       };
 
 
+    // Start recorder
+
     mediaRecorder.start();
 
 
+    // Set speech language
+
+    recognition.lang =
+      selectedLanguage ===
+      "Telugu"
+        ? "te-IN"
+        : "en-IN";
+
+
+    // Start new transcript
+
+    finalTranscript = "";
+
+
+    document.getElementById(
+      "transcript"
+    ).value = "";
+
+
     // Start speech recognition
+
     if (recognition) {
-
-      finalTranscript =
-        document.getElementById("transcript")
-          .value.trim();
-
-
-      if (finalTranscript) {
-
-        finalTranscript += " ";
-
-      }
-
 
       try {
 
         recognition.start();
 
-      } catch (e) {
+      }
 
-        console.log(e);
+      catch (error) {
+
+        console.log(
+          "Recognition already running."
+        );
 
       }
 
     }
 
 
+    // Recording state
+
+    isRecording = true;
+
+    saveStarted = false;
+
+
     startTimer();
 
 
-    document.getElementById("startButton")
-      .disabled = true;
+    document.getElementById(
+      "startButton"
+    ).disabled = true;
 
 
-    document.getElementById("stopButton")
-      .disabled = false;
+    document.getElementById(
+      "stopButton"
+    ).disabled = false;
 
 
     setStatus(
-      "🎤 Recording and converting speech to text...",
+      "🎤 Recording... Speak now.",
       "recording"
     );
 
 
-  } catch (error) {
+  }
+
+  catch (error) {
 
     console.error(error);
 
 
     setStatus(
-      "Microphone access failed. Please allow microphone permission in Chrome.",
+      "Microphone access failed. Please allow microphone access in Chrome.",
       "error"
     );
 
@@ -656,9 +1003,22 @@ async function startRecording() {
 function stopRecording() {
 
 
+  if (!isRecording) {
+
+    return;
+
+  }
+
+
+  isRecording = false;
+
+
+  // Stop audio
+
   if (
     mediaRecorder &&
-    mediaRecorder.state !== "inactive"
+    mediaRecorder.state !==
+      "inactive"
   ) {
 
     mediaRecorder.stop();
@@ -666,9 +1026,21 @@ function stopRecording() {
   }
 
 
-  if (recognition && isListening) {
+  // Stop speech recognition
 
-    recognition.stop();
+  if (recognition) {
+
+    try {
+
+      recognition.stop();
+
+    }
+
+    catch (error) {
+
+      console.log(error);
+
+    }
 
   }
 
@@ -676,12 +1048,36 @@ function stopRecording() {
   stopTimer();
 
 
-  document.getElementById("startButton")
-    .disabled = false;
+  document.getElementById(
+    "startButton"
+  ).disabled = false;
 
 
-  document.getElementById("stopButton")
-    .disabled = true;
+  document.getElementById(
+    "stopButton"
+  ).disabled = true;
+
+
+  // Give final speech result time to arrive
+
+  setTimeout(
+    function() {
+
+      const text =
+        document.getElementById(
+          "transcript"
+        ).value.trim();
+
+
+      if (text && !saveStarted) {
+
+        saveToGoogleSheet();
+
+      }
+
+    },
+    1500
+  );
 
 }
 
@@ -699,13 +1095,16 @@ function startTimer() {
 
 
   timerInterval =
-    setInterval(function() {
+    setInterval(
+      function() {
 
-      seconds++;
+        seconds++;
 
-      updateTimer();
+        updateTimer();
 
-    }, 1000);
+      },
+      1000
+    );
 
 }
 
@@ -713,7 +1112,9 @@ function startTimer() {
 
 function stopTimer() {
 
-  clearInterval(timerInterval);
+  clearInterval(
+    timerInterval
+  );
 
 }
 
@@ -722,18 +1123,26 @@ function stopTimer() {
 function updateTimer() {
 
   const minutes =
-    Math.floor(seconds / 60);
+    Math.floor(
+      seconds / 60
+    );
 
-  const remainingSeconds =
+
+  const secs =
     seconds % 60;
 
 
-  document.getElementById("timer")
-    .textContent =
+  document.getElementById(
+    "timer"
+  ).textContent =
 
-    String(minutes).padStart(2, "0")
+    String(minutes)
+      .padStart(2, "0")
+
     + ":" +
-    String(remainingSeconds).padStart(2, "0");
+
+    String(secs)
+      .padStart(2, "0");
 
 }
 
@@ -749,7 +1158,7 @@ function downloadAudio() {
   if (!audioBlob || !audioUrl) {
 
     setStatus(
-      "Please record something first.",
+      "Please record audio first.",
       "error"
     );
 
@@ -759,24 +1168,27 @@ function downloadAudio() {
 
 
   const studentName =
-    document.getElementById("studentName")
-      .value.trim();
+    document.getElementById(
+      "studentName"
+    ).value.trim();
 
 
   const grade =
-    document.getElementById("grade")
-      .value;
+    document.getElementById(
+      "grade"
+    ).value;
 
 
   const date =
-    document.getElementById("date")
-      .value;
+    document.getElementById(
+      "date"
+    ).value;
 
 
   if (!studentName || !grade) {
 
     setStatus(
-      "Please enter student name and grade first.",
+      "Please enter Student Name and Grade.",
       "error"
     );
 
@@ -785,8 +1197,9 @@ function downloadAudio() {
   }
 
 
-  // Make a safe filename
-  const safeStudentName =
+  // Make filename safe
+
+  const safeName =
     studentName.replace(
       /[^a-zA-Z0-9-_]/g,
       "_"
@@ -801,7 +1214,7 @@ function downloadAudio() {
 
 
   const filename =
-    safeStudentName +
+    safeName +
     "_" +
     safeGrade +
     "_" +
@@ -813,19 +1226,30 @@ function downloadAudio() {
     document.createElement("a");
 
 
-  link.href = audioUrl;
+  link.href =
+    audioUrl;
 
-  link.download = filename;
 
-  document.body.appendChild(link);
+  link.download =
+    filename;
+
+
+  document.body.appendChild(
+    link
+  );
+
 
   link.click();
 
-  document.body.removeChild(link);
+
+  document.body.removeChild(
+    link
+  );
 
 
   setStatus(
-    "Audio downloaded as " + filename,
+    "✅ Audio downloaded: " +
+    filename,
     "success"
   );
 
@@ -837,33 +1261,44 @@ function downloadAudio() {
 // SAVE TEXT TO GOOGLE SHEET
 // =====================================================
 
-function saveText() {
+function saveToGoogleSheet() {
+
+
+  if (saveStarted) {
+
+    return;
+
+  }
 
 
   const studentName =
-    document.getElementById("studentName")
-      .value.trim();
+    document.getElementById(
+      "studentName"
+    ).value.trim();
 
 
   const grade =
-    document.getElementById("grade")
-      .value;
+    document.getElementById(
+      "grade"
+    ).value;
 
 
   const date =
-    document.getElementById("date")
-      .value;
+    document.getElementById(
+      "date"
+    ).value;
 
 
   const text =
-    document.getElementById("transcript")
-      .value.trim();
+    document.getElementById(
+      "transcript"
+    ).value.trim();
 
 
   if (!studentName) {
 
     setStatus(
-      "Please enter the student name.",
+      "Student Name is required.",
       "error"
     );
 
@@ -875,7 +1310,7 @@ function saveText() {
   if (!grade) {
 
     setStatus(
-      "Please select the grade.",
+      "Grade is required.",
       "error"
     );
 
@@ -884,10 +1319,10 @@ function saveText() {
   }
 
 
-  if (!date) {
+  if (!selectedLanguage) {
 
     setStatus(
-      "Please select the date.",
+      "Please select English or Telugu.",
       "error"
     );
 
@@ -899,7 +1334,7 @@ function saveText() {
   if (!text) {
 
     setStatus(
-      "There is no text to save.",
+      "No conversation text available.",
       "error"
     );
 
@@ -908,84 +1343,107 @@ function saveText() {
   }
 
 
-  document.getElementById("saveButton")
-    .disabled = true;
+  saveStarted = true;
 
 
-  setStatus("Saving text to Google Sheet...");
+  document.getElementById(
+    "saveButton"
+  ).disabled = true;
 
 
-  google.script.run
-
-    .withSuccessHandler(
-      function(result) {
-
-        document.getElementById(
-          "saveButton"
-        ).disabled = false;
+  setStatus(
+    "Saving conversation text to Google Sheet..."
+  );
 
 
-        if (result.success) {
+  const data = {
 
-          setStatus(
-            "✅ " + result.message,
-            "success"
-          );
+    studentName:
+      studentName,
 
-        } else {
+    grade:
+      grade,
 
-          setStatus(
-            "❌ " + result.message,
-            "error"
-          );
+    date:
+      date,
 
-        }
+    language:
+      selectedLanguage,
 
-      }
-    )
+    text:
+      text
 
-    .withFailureHandler(
-      function(error) {
-
-        document.getElementById(
-          "saveButton"
-        ).disabled = false;
+  };
 
 
-        setStatus(
-          "❌ Save failed: " +
-          error.message,
-          "error"
-        );
+  fetch(
+    GOOGLE_SCRIPT_URL,
+    {
 
-      }
-    )
+      method: "POST",
 
-    .saveText({
+      mode: "no-cors",
 
-      studentName:
-        studentName,
+      headers: {
 
-      grade:
-        grade,
+        "Content-Type":
+          "text/plain;charset=utf-8"
 
-      date:
-        date,
+      },
 
-      text:
-        text
+      body:
+        JSON.stringify(data)
 
-    });
+    }
+  )
+
+  .then(
+    function() {
+
+      setStatus(
+        "✅ Conversation text saved to Google Sheet.",
+        "success"
+      );
+
+    }
+  )
+
+  .catch(
+    function(error) {
+
+      console.error(error);
+
+      saveStarted = false;
+
+      document.getElementById(
+        "saveButton"
+      ).disabled = false;
+
+
+      setStatus(
+        "❌ Could not save text to Google Sheet.",
+        "error"
+      );
+
+    }
+  );
 
 }
 
 
 
 // =====================================================
-// CLEAR
+// CLEAR EVERYTHING
 // =====================================================
 
 function clearAll() {
+
+
+  if (isRecording) {
+
+    stopRecording();
+
+  }
 
 
   document.getElementById(
@@ -1006,15 +1464,36 @@ function clearAll() {
   finalTranscript = "";
 
 
-  audioBlob = null;
+  selectedLanguage = "";
+
+
+  saveStarted = false;
+
+
+  document.getElementById(
+    "englishButton"
+  ).classList.remove(
+    "selected"
+  );
+
+
+  document.getElementById(
+    "teluguButton"
+  ).classList.remove(
+    "selected"
+  );
 
 
   if (audioUrl) {
 
-    URL.revokeObjectURL(audioUrl);
+    URL.revokeObjectURL(
+      audioUrl
+    );
 
   }
 
+
+  audioBlob = null;
 
   audioUrl = null;
 
@@ -1026,37 +1505,52 @@ function clearAll() {
 
   document.getElementById(
     "audioPlayer"
-  ).style.display = "none";
+  ).style.display =
+    "none";
 
 
   document.getElementById(
     "downloadButton"
-  ).disabled = true;
+  ).disabled =
+    true;
 
 
   document.getElementById(
-    "timer"
-  ).textContent = "00:00";
+    "saveButton"
+  ).disabled =
+    false;
 
 
-  setStatus("Ready");
+  seconds = 0;
+
+  updateTimer();
+
+
+  setStatus(
+    "Ready"
+  );
 
 }
 
 
 
 // =====================================================
-// STATUS
+// STATUS MESSAGE
 // =====================================================
 
-function setStatus(message, type) {
-
+function setStatus(
+  message,
+  type
+) {
 
   const status =
-    document.getElementById("status");
+    document.getElementById(
+      "status"
+    );
 
 
-  status.textContent = message;
+  status.textContent =
+    message;
 
 
   status.className = "";
@@ -1064,7 +1558,9 @@ function setStatus(message, type) {
 
   if (type) {
 
-    status.classList.add(type);
+    status.classList.add(
+      type
+    );
 
   }
 
