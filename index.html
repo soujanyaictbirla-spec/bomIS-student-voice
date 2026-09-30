@@ -1,205 +1,309 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>BOMIS Student Voice Recorder</title>
+<meta charset="UTF-8">
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f2f5f9;
-      padding: 20px;
-    }
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-    .box {
-      max-width: 650px;
-      margin: auto;
-      background: white;
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.15);
-    }
+<title>BOMIS Student Voice Recorder</title>
 
-    h1 {
-      text-align: center;
-      color: #174a7e;
-    }
+<style>
 
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f7fb;
+  margin: 0;
+  padding: 20px;
+}
 
-    input, select, textarea {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 7px;
-      font-size: 16px;
-    }
+.container {
+  max-width: 700px;
+  margin: auto;
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
 
-    textarea {
-      height: 180px;
-    }
+h1 {
+  text-align: center;
+  color: #1f4e79;
+}
 
-    button {
-      padding: 12px 18px;
-      margin: 10px 5px 0 0;
-      border: none;
-      border-radius: 7px;
-      cursor: pointer;
-      font-size: 16px;
-    }
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
 
-    #start {
-      background: #198754;
-      color: white;
-    }
+input,
+select,
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
 
-    #stop {
-      background: #dc3545;
-      color: white;
-    }
+textarea {
+  height: 180px;
+}
 
-    #download {
-      background: #6f42c1;
-      color: white;
-    }
+.buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
 
-    #save {
-      background: #174a7e;
-      color: white;
-    }
+button {
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
 
-    button:disabled {
-      background: #aaa;
-    }
+#startBtn {
+  background: #198754;
+  color: white;
+}
 
-    #timer {
-      text-align: center;
-      font-size: 28px;
-      margin: 15px;
-      font-weight: bold;
-    }
+#stopBtn {
+  background: #dc3545;
+  color: white;
+}
 
-    #status {
-      margin-top: 15px;
-      text-align: center;
-      font-weight: bold;
-    }
-  </style>
+#saveBtn {
+  background: #1f4e79;
+  color: white;
+}
+
+#downloadBtn {
+  background: #6f42c1;
+  color: white;
+}
+
+button:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+#timer {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  margin: 20px;
+}
+
+#status {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+</style>
+
 </head>
 
 <body>
 
-<div class="box">
+<div class="container">
 
-  <h1>🎙️ BOMIS Student Voice Recorder</h1>
+<h1>🎙️ BOMIS Student Voice Recorder</h1>
 
-  <label>Student Name</label>
-  <input id="studentName" type="text">
+<label>Student Name</label>
 
-  <label>Grade</label>
-  <select id="grade">
-    <option value="">Select Grade</option>
-    <option>Grade 1</option>
-    <option>Grade 2</option>
-    <option>Grade 3</option>
-    <option>Grade 4</option>
-    <option>Grade 5</option>
-    <option>Grade 6</option>
-    <option>Grade 7</option>
-    <option>Grade 8</option>
-    <option>Grade 9</option>
-    <option>Grade 10</option>
-    <option>Grade 11</option>
-    <option>Grade 12</option>
-  </select>
+<input
+  type="text"
+  id="studentName"
+  placeholder="Enter student name">
 
-  <label>Date</label>
-  <input id="date" type="date">
 
-  <label>Language</label>
-  <select id="language">
-    <option value="English">English</option>
-    <option value="Telugu">Telugu</option>
-  </select>
+<label>Grade</label>
 
-  <div id="timer">00:00</div>
+<select id="grade">
 
-  <button id="start">🎙️ Start Recording</button>
-  <button id="stop" disabled>⏹ Stop</button>
+<option value="">Select Grade</option>
 
-  <label>Conversation Text</label>
-  <textarea id="transcript"
-    placeholder="Speak after pressing Start..."></textarea>
+<option>Grade 1</option>
+<option>Grade 2</option>
+<option>Grade 3</option>
+<option>Grade 4</option>
+<option>Grade 5</option>
+<option>Grade 6</option>
+<option>Grade 7</option>
+<option>Grade 8</option>
+<option>Grade 9</option>
+<option>Grade 10</option>
+<option>Grade 11</option>
+<option>Grade 12</option>
 
-  <br>
+</select>
 
-  <button id="download" disabled>
-    ⬇️ Download Audio
-  </button>
 
-  <button id="save">
-    💾 Save to Google Sheet
-  </button>
+<label>Date</label>
 
-  <div id="status">Ready</div>
+<input
+  type="date"
+  id="date">
+
+
+<label>Language</label>
+
+<select id="language">
+
+<option value="English">English</option>
+<option value="Telugu">Telugu</option>
+
+</select>
+
+
+<div id="timer">00:00</div>
+
+
+<div class="buttons">
+
+<button id="startBtn">
+🎙️ Start Recording
+</button>
+
+<button id="stopBtn" disabled>
+⏹ Stop Recording
+</button>
+
+</div>
+
+
+<label>Conversation Text</label>
+
+<textarea
+id="transcript"
+placeholder="Your spoken words will appear here..."></textarea>
+
+
+<div class="buttons">
+
+<button id="downloadBtn" disabled>
+⬇️ Download Audio
+</button>
+
+<button id="saveBtn">
+💾 Save to Google Sheet
+</button>
+
+</div>
+
+
+<div id="status">
+Ready
+</div>
 
 </div>
 
 
 <script>
 
+/* =====================================
+   APPS SCRIPT URL
+===================================== */
+
 const GOOGLE_SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbyE1juAJGnPJKSfdh41W4K7gpi8k-QUsO_hgmSKI7P7s1ljb48LzEQJT8G4Uw6HRqUL/exec";
 
 
-document.getElementById("date").value =
+/* =====================================
+   VARIABLES
+===================================== */
+
+let mediaRecorder = null;
+
+let audioChunks = [];
+
+let audioBlob = null;
+
+let recognition = null;
+
+let finalTranscript = "";
+
+let isRecording = false;
+
+let timerInterval = null;
+
+let startTime = 0;
+
+
+/* =====================================
+   ELEMENTS
+===================================== */
+
+const studentName =
+document.getElementById("studentName");
+
+const grade =
+document.getElementById("grade");
+
+const date =
+document.getElementById("date");
+
+const language =
+document.getElementById("language");
+
+const transcript =
+document.getElementById("transcript");
+
+const startBtn =
+document.getElementById("startBtn");
+
+const stopBtn =
+document.getElementById("stopBtn");
+
+const saveBtn =
+document.getElementById("saveBtn");
+
+const downloadBtn =
+document.getElementById("downloadBtn");
+
+const status =
+document.getElementById("status");
+
+const timer =
+document.getElementById("timer");
+
+
+/* =====================================
+   TODAY'S DATE
+===================================== */
+
+date.value =
 new Date().toISOString().split("T")[0];
 
 
-let recorder;
-let chunks = [];
-let audioBlob;
+/* =====================================
+   START
+===================================== */
 
-let recognition;
-let recording = false;
-
-let finalText = "";
-
-let timerInterval;
-let seconds = 0;
-
-
-/* START */
-
-document.getElementById("start").onclick =
-async function() {
+startBtn.onclick = async function() {
 
   try {
 
-    const name =
-      document.getElementById("studentName").value.trim();
-
-    const grade =
-      document.getElementById("grade").value;
-
-    if (!name) {
-      alert("Please enter Student Name");
+    if (!studentName.value.trim()) {
+      alert("Please enter Student Name.");
       return;
     }
 
-    if (!grade) {
-      alert("Please select Grade");
+    if (!grade.value) {
+      alert("Please select Grade.");
       return;
     }
 
+
+    /* MICROPHONE */
 
     const stream =
       await navigator.mediaDevices.getUserMedia({
@@ -207,32 +311,35 @@ async function() {
       });
 
 
-    chunks = [];
+    /* AUDIO */
 
-    recorder =
+    audioChunks = [];
+
+    audioBlob = null;
+
+    mediaRecorder =
       new MediaRecorder(stream);
 
 
-    recorder.ondataavailable =
-    function(e) {
+    mediaRecorder.ondataavailable =
+    function(event) {
 
-      if (e.data.size > 0) {
-        chunks.push(e.data);
+      if (event.data.size > 0) {
+        audioChunks.push(event.data);
       }
 
     };
 
 
-    recorder.onstop =
+    mediaRecorder.onstop =
     function() {
 
       audioBlob =
-        new Blob(chunks, {
+        new Blob(audioChunks, {
           type: "audio/webm"
         });
 
-      document.getElementById("download")
-        .disabled = false;
+      downloadBtn.disabled = false;
 
       stream.getTracks().forEach(
         track => track.stop()
@@ -241,14 +348,17 @@ async function() {
     };
 
 
-    recorder.start();
+    mediaRecorder.start();
 
 
-    /* SPEECH */
+    /* =================================
+       SPEECH RECOGNITION
+    ================================= */
 
     const SpeechRecognition =
       window.SpeechRecognition ||
       window.webkitSpeechRecognition;
+
 
     if (!SpeechRecognition) {
 
@@ -256,7 +366,8 @@ async function() {
         "Please use Google Chrome for speech recognition."
       );
 
-      recorder.stop();
+      mediaRecorder.stop();
+
       return;
     }
 
@@ -265,21 +376,18 @@ async function() {
       new SpeechRecognition();
 
 
-    const language =
-      document.getElementById("language").value;
-
-
     recognition.lang =
-      language === "Telugu"
+      language.value === "Telugu"
       ? "te-IN"
       : "en-IN";
 
 
     recognition.continuous = true;
+
     recognition.interimResults = true;
 
 
-    finalText = "";
+    finalTranscript = "";
 
 
     recognition.onresult =
@@ -300,7 +408,7 @@ async function() {
 
         if (event.results[i].isFinal) {
 
-          finalText += text + " ";
+          finalTranscript += text + " ";
 
         } else {
 
@@ -311,9 +419,8 @@ async function() {
       }
 
 
-      document.getElementById("transcript")
-        .value =
-        finalText + interim;
+      transcript.value =
+        finalTranscript + interim;
 
     };
 
@@ -321,7 +428,24 @@ async function() {
     recognition.onerror =
     function(event) {
 
-      console.log(event.error);
+      console.log(
+        "Speech error:",
+        event.error
+      );
+
+    };
+
+
+    recognition.onend =
+    function() {
+
+      if (isRecording) {
+
+        try {
+          recognition.start();
+        } catch (e) {}
+
+      }
 
     };
 
@@ -329,55 +453,52 @@ async function() {
     recognition.start();
 
 
-    /* TIMER */
+    /* =================================
+       TIMER
+    ================================= */
 
-    seconds = 0;
-
-    document.getElementById("timer")
-      .textContent = "00:00";
-
+    startTime = Date.now();
 
     timerInterval =
       setInterval(function() {
 
-        seconds++;
+        const elapsed =
+          Math.floor(
+            (Date.now() - startTime) / 1000
+          );
 
-        const min =
-          Math.floor(seconds / 60);
+        const minutes =
+          Math.floor(elapsed / 60);
 
-        const sec =
-          seconds % 60;
+        const seconds =
+          elapsed % 60;
 
 
-        document.getElementById("timer")
-          .textContent =
-          String(min).padStart(2,"0")
+        timer.textContent =
+          String(minutes).padStart(2,"0")
           + ":" +
-          String(sec).padStart(2,"0");
+          String(seconds).padStart(2,"0");
 
-      },1000);
-
-
-    recording = true;
+      }, 1000);
 
 
-    document.getElementById("start")
-      .disabled = true;
+    isRecording = true;
 
-    document.getElementById("stop")
-      .disabled = false;
+    startBtn.disabled = true;
 
+    stopBtn.disabled = false;
 
-    document.getElementById("status")
-      .textContent =
+    status.textContent =
       "🔴 Recording...";
 
   }
 
   catch(error) {
 
+    console.error(error);
+
     alert(
-      "Microphone error: " +
+      "Microphone error:\n" +
       error.message
     );
 
@@ -386,18 +507,21 @@ async function() {
 };
 
 
-/* STOP */
+/* =====================================
+   STOP
+===================================== */
 
-document.getElementById("stop").onclick =
-function() {
+stopBtn.onclick = function() {
 
-  recording = false;
+  isRecording = false;
 
 
-  if (recorder &&
-      recorder.state !== "inactive") {
+  if (
+    mediaRecorder &&
+    mediaRecorder.state !== "inactive"
+  ) {
 
-    recorder.stop();
+    mediaRecorder.stop();
 
   }
 
@@ -415,140 +539,150 @@ function() {
   clearInterval(timerInterval);
 
 
-  document.getElementById("start")
-    .disabled = false;
+  startBtn.disabled = false;
 
-  document.getElementById("stop")
-    .disabled = true;
+  stopBtn.disabled = true;
 
 
-  document.getElementById("status")
-    .textContent =
-    "Recording stopped.";
-
+  status.textContent =
+    "Recording stopped. Please save the text.";
 
 };
 
 
-/* DOWNLOAD */
+/* =====================================
+   DOWNLOAD AUDIO
+===================================== */
 
-document.getElementById("download").onclick =
-function() {
+downloadBtn.onclick = function() {
 
   if (!audioBlob) {
-    alert("No audio available.");
+
+    alert("No audio recording available.");
+
     return;
   }
 
 
-  const name =
-    document.getElementById("studentName")
-      .value
+  const safeName =
+    studentName.value
       .trim()
-      .replace(/[^a-zA-Z0-9_-]/g,"_");
+      .replace(/[^a-zA-Z0-9_-]/g, "_");
 
 
-  const grade =
-    document.getElementById("grade")
-      .value
-      .replace(/\s+/g,"_");
+  const safeGrade =
+    grade.value
+      .replace(/\s+/g, "_");
 
 
-  const date =
-    document.getElementById("date")
-      .value;
-
-
-  const filename =
-    name + "_" +
-    grade + "_" +
-    date +
+  const fileName =
+    safeName +
+    "_" +
+    safeGrade +
+    "_" +
+    date.value +
     ".webm";
 
 
-  const url =
+  const audioURL =
     URL.createObjectURL(audioBlob);
 
 
-  const a =
+  const link =
     document.createElement("a");
 
-  a.href = url;
-  a.download = filename;
 
-  document.body.appendChild(a);
+  link.href = audioURL;
 
-  a.click();
+  link.download = fileName;
 
-  document.body.removeChild(a);
 
-  URL.revokeObjectURL(url);
+  document.body.appendChild(link);
+
+  link.click();
+
+  document.body.removeChild(link);
+
+
+  setTimeout(function() {
+
+    URL.revokeObjectURL(audioURL);
+
+  }, 1000);
 
 };
 
 
-/* SAVE */
+/* =====================================
+   SAVE TO GOOGLE SHEET
+===================================== */
 
-document.getElementById("save").onclick =
-async function() {
+saveBtn.onclick = function() {
+
+  saveToGoogleSheet();
+
+};
+
+
+async function saveToGoogleSheet() {
 
   const name =
-    document.getElementById("studentName")
-      .value.trim();
+    studentName.value.trim();
 
-  const grade =
-    document.getElementById("grade")
-      .value;
+  const selectedGrade =
+    grade.value;
 
-  const date =
-    document.getElementById("date")
-      .value;
+  const selectedDate =
+    date.value;
 
-  const language =
-    document.getElementById("language")
-      .value;
+  const selectedLanguage =
+    language.value;
 
   const text =
-    document.getElementById("transcript")
-      .value.trim();
+    transcript.value.trim();
 
 
   if (!name) {
-    alert("Please enter Student Name");
+
+    alert("Please enter Student Name.");
+
     return;
   }
 
 
-  if (!grade) {
-    alert("Please select Grade");
+  if (!selectedGrade) {
+
+    alert("Please select Grade.");
+
     return;
   }
 
 
   if (!text) {
-    alert("No conversation text found");
+
+    alert("No conversation text found.");
+
     return;
   }
-
-
-  document.getElementById("status")
-    .textContent =
-    "Saving to Google Sheet...";
 
 
   const data = {
 
     studentName: name,
 
-    grade: grade,
+    grade: selectedGrade,
 
-    date: date,
+    date: selectedDate,
 
-    language: language,
+    language: selectedLanguage,
 
     text: text
 
   };
+
+
+  status.textContent =
+    "⏳ Saving to Google Sheet...";
 
 
   try {
@@ -562,7 +696,7 @@ async function() {
 
         headers: {
           "Content-Type":
-          "text/plain;charset=utf-8"
+            "text/plain;charset=utf-8"
         },
 
         body: JSON.stringify(data)
@@ -570,9 +704,8 @@ async function() {
     );
 
 
-    document.getElementById("status")
-      .textContent =
-      "✅ Saved to Google Sheet";
+    status.textContent =
+      "✅ Sent to Google Sheet.";
 
   }
 
@@ -580,15 +713,17 @@ async function() {
 
     console.error(error);
 
-    document.getElementById("status")
-      .textContent =
-      "❌ Save failed";
+    status.textContent =
+      "❌ Save failed.";
 
-    alert(error.message);
+    alert(
+      "Could not save:\n" +
+      error.message
+    );
 
   }
 
-};
+}
 
 </script>
 
